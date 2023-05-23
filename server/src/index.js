@@ -10,7 +10,6 @@ app.use('/users', user_router);
 app.use('/sensors', sensor_router);
 
 app.use((err, req, res, next) => {
-	
 	if (res.headersSent) {
 		return next(err);
 	}
