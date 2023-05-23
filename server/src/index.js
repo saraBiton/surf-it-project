@@ -15,7 +15,7 @@ app.use((err, req, res, next) => {
 	}
 
 	res.status(500);
-	res.render('error', { error: err });
+	res.json({ error_code: err.code, message: err.message });
 	console.error(err.stack);
 });
 
