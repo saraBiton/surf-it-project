@@ -1,39 +1,34 @@
 import { Router } from 'express';
 import userControllers from '../controllers/userController.js';
-const router = Router();
 
-router.route('/').get(async (req, res) => {
+const user_router = Router();
+
+user_router.route('/').get(async (req, res) => {
 	const result = await userControllers.getAllUsers();
 	res.json(result);
 });
 
-router.route('/pass').get(async (req, res) => {
-	console.log(req.params.password);
-	const result = await userControllers.getUserById(req.params.password);
-	res.json(result);
-});
-
-router.route('/new').post(async (req, res) => {
+user_router.route('/new').post(async (req, res) => {
 	const obj = req.body;
 	const result = await userControllers.addUser(obj);
 	console.log(result);
 	res.json(result);
 });
 
-router.route('/:id').get(async (req, res) => {
+user_router.route('/:id').get(async (req, res) => {
 	const result = await userControllers.getUserById(req.params.id);
 	res.json(result);
 });
 
-router.route('/:id/edit').put(async (req, res) => {
+user_router.route('/:id/edit').put(async (req, res) => {
 	const obj = req.body;
 	const result = await userControllers.updateUser(req.params.id, obj);
 	res.json(result);
 });
 
-router.route('/:id/delete').delete((req, res) => {
+user_router.route('/:id/delete').delete((req, res) => {
 	const result = userControllers.deleteUser(req.params.id);
 	res.json(result);
 });
 
-export default router;
+export { user_router };

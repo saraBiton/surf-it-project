@@ -23,10 +23,10 @@ const addSensor = async (obj) => {
 	}
 };
 
-const updateSensor = async (obj) => {
+const updateSensor = async (id, obj) => {
 	console.log('obj', obj);
 	try {
-		await Sensor.findByIdAndUpdate(obj._id.toJSON('new ObjectId'), obj);
+		await Sensor.findByIdAndUpdate(id, obj);
 		return 'Updated!';
 	} catch (err) {
 		return err;
