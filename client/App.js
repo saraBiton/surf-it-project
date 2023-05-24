@@ -27,7 +27,7 @@ function App() {
         <Stack.Screen name="Adding_sensor" component={AddSensor2} />
         <Stack.Screen name="Deleting_sensor" component={DeleteSensor2} />
         <Stack.Screen name="basicUrl" component={basicUrl} />
-        <Stack.Screen name="TableData" component={TableData} />
+        <Stack.Screen name="tableUser" component={TableData} />
        <Stack.Screen name="lifeguardMap" component={MarkerMap} />
        <Stack.Screen name="Sensor_rental_management" component={SensorRentalManagement} />
        <Stack.Screen name="AppDistance" component={AppDistance} />

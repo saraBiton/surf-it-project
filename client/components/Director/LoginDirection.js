@@ -32,31 +32,33 @@ const LoginScreen = ({ navigation }) => {
   //       console.error(error);
   //       setError('Internal server error');
   //     }
-  // navigation.navigate('Director');
+  navigation.navigate('Director');
 
-// ridax
-  const handleLogin = async () => {
+  // ridax
+  const handleLogin = async (navigation) => {
+    navigation.navigate('Director');
 
-    const Login = {
-      username: userName,
-      password: password,
-    };
-    try {
-      const response = await CheckPassword (basicUrl + 'login/', Login);
-      console.log(basicUrl + 'login/',Login);
-      const result = response.data;
-      console.log(result);
-      if (result === 'director') {
-        navigation.navigate('Director');
-      } else if (result === 'lifeguard') {
-        navigation.navigate('lifeguardMap');
-      } else {
-        setError('Invalid credentials');
-      }
-    } catch (error) {
-      console.error(error);
-      setError('Internal server error');
-    }
+    // navigation.navigate('Director');
+    // const Login = {
+    //   username: userName,
+    //   password: password,
+    // };
+    // try {
+    //   const response = await CheckPassword (basicUrl + 'login/', Login);
+    //   console.log(basicUrl + 'login/',Login);
+    //   const result = response.data;
+    //   console.log(result);
+    //   if (result === 'director') {
+    //     navigation.navigate('Director');
+    //   } else if (result === 'lifeguard') {
+    //     navigation.navigate('lifeguardMap');
+    //   } else {
+    //     setError('Invalid credentials');
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   setError('Internal server error');
+    // }
   };
 
 

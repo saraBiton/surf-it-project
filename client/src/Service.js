@@ -1,7 +1,6 @@
 import axios from 'axios'
-import Director from '../components/Director/Director';
 
-const getAll = (url) => axios.get(url);
+const getAll = () => axios.get('http://localhost:8000/users');
 
 const getById = (url, userId) => axios.get(`${url}/${userId}`);
 
@@ -37,9 +36,9 @@ export const CheckPassword = async (url, user) => {
 
 const updateItem = (url, userId, obj) => axios.patch(`${url}/${userId}`, obj);
 
-const AddSensor = async (url, sensor) => {
+const AddSensor = async (url, IDsensor) => {
     try {
-        const response = await axios.post(`${url}`, sensor);
+        const response = await axios.post(`${url}`, IDsensor);
         console.log(response.data);
     } catch (error) {
         console.error(error);
