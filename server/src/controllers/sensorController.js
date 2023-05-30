@@ -14,23 +14,21 @@ const getSensorById = (id) => {
 };
 
 const addSensor = async (obj) => {
-	try {
-		const sensor = new Sensor(obj);
-		await (sensor.save());
-		return sensor;
-	} catch (err) {
-		return err;
+	delete obj._id;
+	const sensor = new Sensor(obj);
+	await sensor.save();
+
+	if (sensor.isSimulateMoves) {
+		console.log();
 	}
+	return sensor;
 };
 
 const updateSensor = async (id, obj) => {
 	console.log('obj', obj);
-	try {
-		await Sensor.findByIdAndUpdate(id, obj);
-		return 'Updated!';
-	} catch (err) {
-		return err;
-	}
+
+	await Sensor.findByIdAndUpdate(id, obj);
+	return 'Updated!';
 };
 
 const deleteSensor = async (id) => {

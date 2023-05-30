@@ -1,39 +1,81 @@
 import WebSocket from 'ws';
+import { SetRandomCoordinates } from './RandomCoordinates.js';
+
+/**
+ * @typedef {({lat: Number, lng: Number})} Position
+ */
 
 class Sensor {
-	constructor(id = '', position) {
-		this.id = id;
+	/**
+	 *
+	 * @param {String} id
+	 * @param {Position} position
+	 */
+	constructor (prop) {
+		/** @type {Position} מיקום החיישן */
+		this.position = prop.position;
 
-		// מיקום החיישן
-		this.position = position;
+		this.lifeJacketNum = prop.lifeJacketNum;
+
+		this.isActive = true;
 
 		// מצב החיישן
 		this.status = 'OK'; // הכל בסדר-ירוקOK / -כתוםAttention-תשומת לב /  SOS-אדום, הזעקת כוחות הצלה
 
 		// האם לנפח את האפודה?
-		this.inflated_life_jacket = false;
+		this.inflatedLifeJacket = false;
 	}
 
-	inflate_life_jacket() {
-		this.inflated_life_jacket = true;
+	inflate_life_jacket () {
+		this.inflatedLifeJacket = true;
 	}
 
-	on_sos() {
+	on_sos () {
 		this.status = 'SOS';
 		this.inflate_life_jacket();
 	}
 
-	on_Attention() {
+	on_Attention () {
 		this.status = 'Attention';
 	}
 
-	start() {
+	toSend () {
+		return {
+			_id: this.id,
+			position: this.position,
+			status: this.status,
+			lifeJacketNum: this.lifeJacketNum,
+			isActive: this.isActive,
+			inflatedLifeJacket: this.inflatedLifeJacket
+		};
+	}
+
+	async delete () {
+		this.isActive = false;
+		return await fetch(`http://127.0.0.1:8000/sensors/${this.id}/delete`, {
+			body: JSON.stringify(this.toSend()),
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' }
+		});
+	}
+
+	async start () {
+		const res = await fetch('http://127.0.0.1:8000/sensors/new', {
+			body: JSON.stringify(this.toSend()),
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' }
+		});
+
+		const newSensor = await res.json();
+
+		this.id = newSensor._id;
+
 		this.ws_client = new WebSocket('ws://127.0.0.1:8000/sensor-ws');
 
 		this.ws_client.on('open', async () => {
 			console.log(`sensor ${this.id} connecting`);
 
-			while (true) {
+			while (this.isActive) {
 				this.position = SetRandomCoordinates(this.position);
 
 				const random_status = SetRandomStatus();
@@ -47,13 +89,7 @@ class Sensor {
 						break;
 				}
 
-				const data_to_send = {
-					id: this.id,
-					position: this.position,
-					status: this.status
-				};
-
-				this.ws_client.send(JSON.stringify(data_to_send));
+				this.ws_client.send(JSON.stringify(this.toSend()));
 
 				await new Promise(
 					(resolve) => setTimeout(resolve, 0.3 * 1000)
@@ -69,34 +105,7 @@ class Sensor {
 	}
 }
 
-/**
- * פונקציה זו מייצרת תזוזות קטנות במיקום,
- * ע"מ לייצר אשלייה של תנועה
- */
-function SetRandomCoordinates(position) {
-	let random_num = GetRandomRange(0.000001, 0.000009);
-
-	// הסתברות של 0.5 למספר שלילי
-	if (Math.random() > 0.5) {
-		random_num = MakeNumberNegative(random_num);
-	}
-
-	// הסתברות של 0.5 כדי לקבוע האם לשנות את האורך או את הרוחב
-	if (Math.random() > 0.5) {
-		position.lat += random_num;
-	} else {
-		position.lng += random_num;
-	}
-
-	return position;
-
-	// הופך מספר לשלילי
-	function MakeNumberNegative(num) {
-		return num - (num * 2);
-	}
-}
-
-function SetRandomStatus() {
+function SetRandomStatus () {
 	let status = 'OK';
 
 	if (Math.random() <= 0.02) {
@@ -110,21 +119,44 @@ function SetRandomStatus() {
 	return status;
 }
 
-// מייצר מספר אקראי בטווח מסויים
-function GetRandomRange(min, max, round_num = 5) {
-	return Number((Math.random() * (max - min) + min).toFixed(round_num));
-}
+(async function main () {
+	try {
+		await sleep(3 * 1000);
+		console.log('sensor start...');
+		const sensor1 = new Sensor({
+			position: {
+				lat: 31.791299,
+				lng: 34.626264
+			}
+		});
+		sensor1.start();
+		const sensor2 = new Sensor({
+			position: {
+				lat: 31.790960,
+				lng: 34.626059
+			}
+		});
+		sensor2.start();
 
-(function main() {
-	console.log('sensor start...');
-	const sensor1 = new Sensor('8t8768v7', {
-		lat: 31.791299,
-		lng: 34.626264
-	});
-	sensor1.start();
-	const sensor2 = new Sensor('b87t876h', {
-		lat: 31.790960,
-		lng: 34.626059
-	});
-	sensor2.start();
+		async function onClose () {
+			await Promise.all([
+				sensor1.delete(), sensor2.delete()
+			]);
+			console.log('process is close!');
+			process.exit(0);
+		}
+
+		process.on('SIGKILL', onClose);
+		process.on('SIGINT', onClose);
+	} catch (error) {
+		console.error(error);
+		await sleep(2 * 1000);
+		main();
+	}
 })();
+
+async function sleep (ms) {
+	return	 new Promise(
+		(resolve) => setTimeout(resolve, ms)
+	);
+}

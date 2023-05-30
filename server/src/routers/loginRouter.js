@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 
-const router = Router();
+const login_router = Router();
 
 // router.route('/').post(async (req, res) => {
 //     const { username, password } = req.body;
@@ -12,11 +12,11 @@ const router = Router();
 //     console.log(result);
 //     res.json(result);
 // })
-router.route('/').post(async (req, res) => {
+login_router.route('/').post(async (req, res) => {
 	const { username, password } = req.body;
 	const result = await checkLogin({ username, password });
 	console.log(result);
 	res.json(result);
 });
 
-export { router };
+export { login_router };

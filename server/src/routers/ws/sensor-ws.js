@@ -1,7 +1,6 @@
 /** @type {import("express-ws").Router} */
 import { Router } from 'express';
-
-import { sensor_list } from '../../sensor_list.js';
+import sensorController from '../../controllers/sensorController.js';
 
 const sensor_ws_router = Router();
 
@@ -11,8 +10,7 @@ sensor_ws_router.ws('/sensor-ws', (ws) => {
 			console.error('WebSocket error:', error);
 		};
 		const sensor_data = JSON.parse(msg);
-
-		sensor_list[sensor_data.id] = sensor_data;
+		sensorController.updateSensor(sensor_data._id, sensor_data);
 	});
 });
 
