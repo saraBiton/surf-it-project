@@ -36,9 +36,9 @@ export const CheckPassword = async (url, user) => {
 
 const updateItem = (url, userId, obj) => axios.patch(`${url}/${userId}`, obj);
 
-const AddSensor = async (url, IDsensor) => {
+const sendData = async (url, obj) => {//הבן שלי בוכה אז שניה אני בשקט
     try {
-        const response = await axios.post(`${url}`, IDsensor);
+        const response = await axios.post(`${url}`, obj);
         console.log(response.data);
     } catch (error) {
         console.error(error);
@@ -54,4 +54,5 @@ const DeleteSensor = async (url, sensor) => {
     }
 }
 
-export { DeleteSensor, AddSensor, addUser, getById, getAll, updateItem };
+export { DeleteSensor, sendData, addUser, getById, getAll, updateItem };
+//איפה המסך של לוגין?

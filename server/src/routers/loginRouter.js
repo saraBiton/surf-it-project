@@ -1,6 +1,6 @@
 // localhost:3000/login/
 import { Router } from 'express';
-import { checkLogin } from '../controllers/loginController.js';
+
 
 const router = Router();
 
@@ -13,9 +13,8 @@ const router = Router();
 //     res.json(result);
 // })
 router.route('/').post(async (req, res) => {
-	// const password= req.body;
-	// console.log(req.body);
-	const result = await checkLogin(req.body);
+	const { username, password } = req.body;
+	const result = await checkLogin({ username, password });
 	console.log(result);
 	res.json(result);
 });

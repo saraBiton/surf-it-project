@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 
 class Sensor {
-	constructor (id = '', position) {
+	constructor(id = '', position) {
 		this.id = id;
 
 		// מיקום החיישן
@@ -14,29 +14,29 @@ class Sensor {
 		this.inflated_life_jacket = false;
 	}
 
-	inflate_life_jacket () {
+	inflate_life_jacket() {
 		this.inflated_life_jacket = true;
 	}
 
-	on_sos () {
+	on_sos() {
 		this.status = 'SOS';
 		this.inflate_life_jacket();
 	}
 
-	on_Attention () {
+	on_Attention() {
 		this.status = 'Attention';
 	}
 
-	start () {
+	start() {
 		this.ws_client = new WebSocket('ws://127.0.0.1:8000/sensor-ws');
 
 		this.ws_client.on('open', async () => {
 			console.log(`sensor ${this.id} connecting`);
 
 			while (true) {
-				this.position = set_random_coordinates(this.position);
+				this.position = SetRandomCoordinates(this.position);
 
-				const random_status = set_random_status();
+				const random_status = SetRandomStatus();
 
 				switch (random_status) {
 					case 'Attention':
@@ -73,12 +73,12 @@ class Sensor {
  * פונקציה זו מייצרת תזוזות קטנות במיקום,
  * ע"מ לייצר אשלייה של תנועה
  */
-function set_random_coordinates (position) {
-	let random_num = get_random_in_range(0.000001, 0.000009);
+function SetRandomCoordinates(position) {
+	let random_num = GetRandomRange(0.000001, 0.000009);
 
 	// הסתברות של 0.5 למספר שלילי
 	if (Math.random() > 0.5) {
-		random_num = make_number_negative(random_num);
+		random_num = MakeNumberNegative(random_num);
 	}
 
 	// הסתברות של 0.5 כדי לקבוע האם לשנות את האורך או את הרוחב
@@ -91,12 +91,12 @@ function set_random_coordinates (position) {
 	return position;
 
 	// הופך מספר לשלילי
-	function make_number_negative (num) {
+	function MakeNumberNegative(num) {
 		return num - (num * 2);
 	}
 }
 
-function set_random_status () {
+function SetRandomStatus() {
 	let status = 'OK';
 
 	if (Math.random() <= 0.02) {
@@ -111,11 +111,11 @@ function set_random_status () {
 }
 
 // מייצר מספר אקראי בטווח מסויים
-function get_random_in_range (min, max, round_num = 5) {
+function GetRandomRange(min, max, round_num = 5) {
 	return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
 
-(function main () {
+(function main() {
 	console.log('sensor start...');
 	const sensor1 = new Sensor('8t8768v7', {
 		lat: 31.791299,

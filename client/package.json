@@ -9,8 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
     "@expo/webpack-config": "^18.0.1",
     "@googlemaps/js-api-loader": "^1.15.1",
+    "@mui/icons-material": "^5.11.16",
     "@react-google-maps/api": "^2.18.1",
     "@react-native-community/geolocation": "^3.0.6",
     "@react-navigation/stack": "^6.3.16",
@@ -34,7 +36,9 @@
     "react-native-web": "~0.18.10",
     "react-native-webview": "11.26.0",
     "react-navigation": "^4.4.4",
-    "react-ng-cli": "^0.0.6"
+    "react-ng-cli": "^0.0.6",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

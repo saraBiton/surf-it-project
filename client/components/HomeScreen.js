@@ -4,6 +4,8 @@ import LoginScreen from './Director/LoginDirection';
 import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import MarkerMap from './lifeguard/mapOfLocation';
 import TableData from './table';
+import { Login } from './Login';
+import { SignUp } from './Login';
 // import calculateDistance from '../try/trydis';
 function HomeScreen({ navigation }) {
     const [activeButton, setActiveButton] = useState(null);
@@ -22,6 +24,14 @@ function HomeScreen({ navigation }) {
                 <TouchableOpacity style={styles.button}
                     onPress={() => navigation.navigate('tableUser')}>
                     <Text style={styles.buttonText} >tableUser</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button}
+                    onPress={() => navigation.navigate('login')}>
+                    <Text style={styles.buttonText} >SignIn</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button}
+                    onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={styles.buttonText} >SignUp</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button}
                     onPress={() => navigation.navigate('lifeguardMap')}>
