@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { sendData } from '../src/Service';
-import {basicUrl} from '../src/config';
+import { basicUrl } from '../src/config';
 
 
 const Login = (navigate) => {
@@ -14,14 +14,14 @@ const Login = (navigate) => {
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
-    }; 
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         // Here you can add your authentication logic
         console.log(`userName: ${email}, Password: ${password}`);
-        const user = sendData(basicUrl+'login', {email, password});
+        const user = sendData(basicUrl + 'login', { email, password });
         console.log(user)
     };
 
@@ -38,7 +38,7 @@ const Login = (navigate) => {
             <button type="submit">Log in</button>
 
 
-             {/* <Link
+            {/* <Link
                 onClick={() => navigate("/SignUp")}
                 href="#"
                 variant="body2"
@@ -46,8 +46,8 @@ const Login = (navigate) => {
                 {"עדיין לא יצרת חשבון?  הרשם כעת"}
             </Link>  */}
 
-          
-ְְ
+
+            ְְ
         </form>
     );
 };
