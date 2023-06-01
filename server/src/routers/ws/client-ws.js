@@ -16,14 +16,19 @@ client_ws_router.ws('/client-ws', (ws) => {
 			ws.on('close', () => { loop = false; });
 			// eslint-disable-next-line no-unmodified-loop-condition
 			while (loop) {
+				// שליחת רשימת סנסורים כל הזמן
 				const sensorList = await sensorController.getAllSensors();
 				ws.send(JSON.stringify(sensorList));
-				await new Promise(
-					(resolve) => setTimeout(resolve, 0.3 * 1000)
-				);
+				await sleep(0.3);
 			}
 		}
 	});
 });
 
 export { client_ws_router };
+
+async function sleep (sec) {
+	return await new Promise(
+		(resolve) => setTimeout(resolve, sec * 1000)
+	);
+};
