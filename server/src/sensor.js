@@ -139,6 +139,7 @@ function SetRandomStatus () {
 		sensor2.start();
 
 		async function onClose () {
+			console.log('process is close...');
 			await Promise.all([
 				sensor1.delete(), sensor2.delete()
 			]);
@@ -146,7 +147,7 @@ function SetRandomStatus () {
 			process.exit(0);
 		}
 
-		process.on('SIGKILL', onClose);
+		// process.on('SIGKILL', onClose);
 		process.on('SIGINT', onClose);
 	} catch (error) {
 		console.error(error);

@@ -1,12 +1,8 @@
 import { Sensor } from '../Models/sensorModel.js';
 
 const getAllSensors = async () => {
-	try {
-		const sensors = await Sensor.find();
-		return sensors;
-	} catch (err) {
-		return err;
-	}
+	const sensors = await Sensor.find();
+	return sensors;
 };
 
 const getSensorById = (id) => {
@@ -19,21 +15,27 @@ const addSensor = async (obj) => {
 	await sensor.save();
 
 	if (sensor.isSimulateMoves) {
-		console.log();
+		sensor.randomCoordinatesLoop();
 	}
 	return sensor;
+};
+
+const SetRandomCoordinatesForAll = async () => {
+	const list = await getAllSensors();
+
+	for (const sensor of list) {
+		sensor.randomCoordinatesLoop();
+	}
 };
 
 const updateSensor = async (id, obj) => {
 	console.log('obj', obj);
 
-	await Sensor.findByIdAndUpdate(id, obj);
-	return 'Updated!';
+	return await Sensor.findByIdAndUpdate(id, obj);
 };
 
 const deleteSensor = async (id) => {
-	await Sensor.findByIdAndDelete(id);
-	return 'Deleted!';
+	return await Sensor.findByIdAndDelete(id);
 };
 
 export default {
@@ -41,5 +43,6 @@ export default {
 	getSensorById,
 	addSensor,
 	updateSensor,
-	deleteSensor
+	deleteSensor,
+	SetRandomCoordinatesForAll
 };

@@ -1,9 +1,12 @@
 import { app } from './express.js';
 import { sensor_ws_router } from './routers/ws/sensor-ws.js';
 import { client_ws_router } from './routers/ws/client-ws.js';
-import { user_router } from './routers/userRouter.js';
 import { sensor_router } from './routers/sensorRouter.js';
 import { login_router } from './routers/loginRouter.js';
+import { user_router } from './routers/userRouter.js';
+import sensorController from './controllers/sensorController.js';
+
+sensorController.SetRandomCoordinatesForAll();
 
 app.use(sensor_ws_router);
 app.use(client_ws_router);

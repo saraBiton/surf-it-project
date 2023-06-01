@@ -9,34 +9,45 @@ const Sensor = model('Sensor', new Schema({
 	isActive: Boolean,
 	isSimulateMoves: Boolean,
 	position: { lat: Number, lng: Number },
-	status: String,
-	inflatedLifeJacket: Boolean
+	status: {
+		type: String,
+		default: 'OK'
+	},
+	inflatedLifeJacket: {
+		type: Boolean,
+		default: false
+	}
 }, {
 	versionKey: false,
 	methods: {
-		randomCoordinatesLoop () {
+		randomCoordinatesLoop() {
 			const ms = 200;
 
 			const handle = setInterval(() => {
-				if (this.$isDeleted()) clearInterval(handle);
+				if (
+					this.$isDeleted() ||
+					!this.isActive
+				) clearInterval(handle);
 
 				this.position = SetRandomCoordinates(this.position);
+				this.save();
 			}, ms);
 		},
-		onSos () {
+
+		onSos() {
 			this.status = 'SOS';
 			this.inflatedLifeJacket();
 		},
 
-		onAttention () {
+		onAttention() {
 			this.status = 'Attention';
 		},
 
-		inflatedLifeJacketNow () {
+		inflatedLifeJacketNow() {
 			this.inflatedLifeJacket = true;
 		}
 	}
 }),
-'sensors');
+	'sensors');
 
 export { Sensor };
