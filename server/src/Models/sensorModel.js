@@ -1,10 +1,10 @@
-import { Schema, Types, model, Error } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 import { SetRandomCoordinates } from '../RandomCoordinates.js';
 
 const Sensor = model('Sensor', new Schema({
 	// sensorID: {type: String, required: true},
-	userId: { type: Types.ObjectId, ref: 'User' },
+	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	lifeJacketNum: Number,
 	isActive: Boolean,
 	isSimulateMoves: Boolean,
@@ -20,12 +20,13 @@ const Sensor = model('Sensor', new Schema({
 }, {
 	versionKey: false,
 	methods: {
-		randomCoordinatesLoop() {
+		randomCoordinatesLoop () {
+			// פונ' סימולציית תזוזה
 			const ms = 700;
 
 			const _this = this;
 
-			const handle = setInterval(async function intervalRandomLoop() {
+			const handle = setInterval(async function intervalRandomLoop () {
 				if (
 					_this.$isDeleted() ||
 					!_this.isActive ||
@@ -44,16 +45,16 @@ const Sensor = model('Sensor', new Schema({
 			}, ms);
 		},
 
-		onSos() {
+		onSos () {
 			this.status = 'SOS';
 			this.inflatedLifeJacket();
 		},
 
-		onAttention() {
+		onAttention () {
 			this.status = 'Attention';
 		},
 
-		inflatedLifeJacketNow() {
+		inflatedLifeJacketNow () {
 			this.inflatedLifeJacket = true;
 		}
 	}

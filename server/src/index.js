@@ -6,6 +6,7 @@ import { login_router } from './routers/loginRouter.js';
 import { user_router } from './routers/userRouter.js';
 import sensorController from './controllers/sensorController.js';
 
+// הפעלת רנדומציית מיקום סנסורים
 sensorController.SetRandomCoordinatesForAll();
 
 app.use(sensor_ws_router);
