@@ -1,7 +1,6 @@
 // localhost:3000/login/
 import { Router } from 'express';
 
-
 const login_router = Router();
 
 // router.route('/').post(async (req, res) => {

@@ -1,9 +1,12 @@
+import { basicUrl } from '../../src/config.js';
+
 /**@type {WebSocket} */
 let ws;
+const url = basicUrl.split('//')[1].replace('/', '')
 
 function start_ws_client(cb) {
     if (!ws) {
-        ws = new WebSocket('ws://localhost:8000/client-ws');
+        ws = new WebSocket(`ws://${url}/client-ws`);
         ws.onopen = () => ws.send('start');
     }
 

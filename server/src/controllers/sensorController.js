@@ -35,7 +35,13 @@ const updateSensor = async (id, obj) => {
 };
 
 const deleteSensor = async (id) => {
-	return await Sensor.findByIdAndDelete(id);
+	const sensor = await Sensor.findByIdAndDelete(id);
+	if (sensor) { // אם אכן היה כזה סנסור
+		sensor.$isDeleted(true);
+		sensor.isSimulateMoves = false; // עצירת המיקום הרנדומלי
+	}
+
+	return sensor;
 };
 
 export default {

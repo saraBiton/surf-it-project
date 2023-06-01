@@ -32,16 +32,14 @@ const checkLogin = async (username, password) => {
 	try {
 		const user = await User.findOne({ username, password });
 		console.log(user);
-		if (user) { return console.log(user); 
-	} 
-		else { return console.error(); }
+		if (user) {
+			return console.log(user);
+		} else { return console.error(); }
 	} catch (error) {
 		console.error(error);
 		return 'Internal server error';
 	}
 };
-
-
 
 export default {
 	checkLogin,

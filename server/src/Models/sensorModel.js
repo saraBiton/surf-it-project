@@ -1,4 +1,4 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, Types, model, Error } from 'mongoose';
 
 import { SetRandomCoordinates } from '../RandomCoordinates.js';
 
@@ -21,16 +21,26 @@ const Sensor = model('Sensor', new Schema({
 	versionKey: false,
 	methods: {
 		randomCoordinatesLoop() {
-			const ms = 200;
+			const ms = 700;
 
-			const handle = setInterval(() => {
+			const _this = this;
+
+			const handle = setInterval(async function intervalRandomLoop() {
 				if (
-					this.$isDeleted() ||
-					!this.isActive
-				) clearInterval(handle);
+					_this.$isDeleted() ||
+					!_this.isActive ||
+					!_this.isSimulateMoves
+				) {
+					clearInterval(handle);
+				} else {
+					_this.position = SetRandomCoordinates(_this.position);
 
-				this.position = SetRandomCoordinates(this.position);
-				this.save();
+					await _this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
+						if (err.name !== 'DocumentNotFoundError') {
+							throw err;
+						}
+					});
+				}
 			}, ms);
 		},
 
@@ -47,7 +57,6 @@ const Sensor = model('Sensor', new Schema({
 			this.inflatedLifeJacket = true;
 		}
 	}
-}),
-	'sensors');
+}), 'sensors');
 
 export { Sensor };

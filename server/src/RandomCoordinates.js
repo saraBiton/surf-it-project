@@ -4,7 +4,7 @@
  * ע"מ לייצר אשלייה של תנועה
  */
 
-function SetRandomCoordinates(position) {
+function SetRandomCoordinates (position) {
 	let random_num = GetRandomRange(0.000001, 0.000009);
 
 	// הסתברות של 0.5 למספר שלילי
@@ -22,13 +22,13 @@ function SetRandomCoordinates(position) {
 	return position;
 
 	// הופך מספר לשלילי
-	function MakeNumberNegative(num) {
+	function MakeNumberNegative (num) {
 		return num - (num * 2);
 	}
 }
 
 // מייצר מספר אקראי בטווח מסויים
-function GetRandomRange(min, max, round_num = 5) {
+function GetRandomRange (min, max, round_num = 5) {
 	return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
 
