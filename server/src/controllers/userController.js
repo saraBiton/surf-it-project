@@ -1,12 +1,13 @@
 import { User } from '../Models/userModel.js';
 
 const getAllUsers = async () => {
-	const uses = await User.find();
+	// מביא רשימת משתמשים כולל סנסורים
+	const uses = await User.find().populate('sensors');
 	return uses;
 };
 
-const getUserById = (id) => {
-	return User.findById(id);
+const getUserById = async (id) => {
+	return await User.findById(id).populate('sensors');
 };
 
 const addUser = async (obj) => {
@@ -18,7 +19,7 @@ const addUser = async (obj) => {
 const updateUser = async (id, obj) => {
 	console.log('obj', obj);
 
-	const user = await User.findByIdAndUpdate(id, obj);
+	const user = await User.findByIdAndUpdate(id, obj).populate('sensors');
 	return user;
 };
 
