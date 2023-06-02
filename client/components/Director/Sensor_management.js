@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Text, TouchableOpacity } from 'react-native';
 // import { AddSensor, DeleteSensor } from './';
-import { AddSensor } from '../../src/Service';
+import { addItem } from '../../src/Service';
 import { DeleteSensor } from '../../src/Service';
 import { basicUrl } from '../../src/config';
 
@@ -32,7 +32,7 @@ export function AddSensor2({ navigation }) {
     const [activeButton, setActiveButton] = useState(null);
     const [IdSensor, setIdSensor] = useState('');
     const handleLogin = () => {
-        AddSensor(`basicUrl`+`/sensors`,IdSensor);
+        addItem(`basicUrl`+`/sensors`,IdSensor);
         console.log('IdSensor:', IdSensor);
 
     };

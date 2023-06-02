@@ -6,7 +6,7 @@ const getById = (url, userId) => axios.get(`${url}/${userId}`);
 
 // const addUser = (url, obj) => axios.post(url, obj);
 
-const addUser = async (url, user) => {
+const addItem = async (url, user) => {
     try {
         const response = await axios.post(`${url}`, user);
         console.log(response.data);
@@ -54,5 +54,5 @@ const DeleteSensor = async (url, sensor) => {
     }
 }
 
-export { DeleteSensor, sendData, addUser, getById, getAll, updateItem };
+export { DeleteSensor, sendData, addItem, getById, getAll, updateItem };
 //איפה המסך של לוגין?
