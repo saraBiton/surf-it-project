@@ -6,7 +6,7 @@ import { basicUrl } from '../src/config';
 
 
 const Login = (navigate) => {
-    const [email, setEmail] = useState(null);
+    const [userName, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
