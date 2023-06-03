@@ -11,6 +11,16 @@ const userSchema = new Schema({
 	volunteer: { lat: Number, lng: Number, isActive: Boolean },
 	sensors: [{ type: Schema.Types.ObjectId, ref: 'Sensor' }]
 }, {
+	methods: {
+		dataToShow () {
+			// מידע להצגה ברשימת כל היוזרים
+			return {
+				fullName: `${this.firstName} ${this.lastName}`,
+				city: this.city,
+				role: this.role
+			};
+		}
+	},
 	versionKey: false
 });
 

@@ -2,8 +2,8 @@ import { User } from '../Models/userModel.js';
 
 const getAllUsers = async () => {
 	// מביא רשימת משתמשים כולל סנסורים
-	const uses = await User.find().populate('sensors');
-	return uses;
+	const users = await User.find();
+	return users.map(user => user.dataToShow());
 };
 
 const getUserById = async (id) => {

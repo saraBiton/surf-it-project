@@ -30,6 +30,7 @@
     "react-native-google-matrix": "^0.0.3",
     "react-native-maps": "^1.7.1",
     "react-native-reanimated": "~2.14.4",
+    "react-native-reanimated-table": "^0.0.2",
     "react-native-screens": "^3.20.0",
     "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
@@ -42,7 +43,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@babel/plugin-syntax-top-level-await": "^7.14.5"
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
+    "eslint": "^8.41.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1"
   },
   "private": true
 }
