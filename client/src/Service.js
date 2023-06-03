@@ -11,7 +11,7 @@ const getAllSensors = () =>
 
 // const addUser = (url, obj) => axios.post(url, obj);
 
-const addUser = async (url, user) => {
+const addItem = async (url, user) => {
 	try {
 		const response = await axios.post(`${url}`, user);
 		console.log(response.data);
@@ -62,7 +62,7 @@ const DeleteSensor = async (url, sensor) => {
 export {
 	DeleteSensor,
 	sendData,
-	addUser,
+	addItem,
 	getById,
 	getAll,
 	updateItem,
