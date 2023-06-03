@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-reanimated-table';
-
+// import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-reanimated-table';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { getAll } from '../../src/Service';
 
 const Table2 = () => {
