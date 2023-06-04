@@ -22,17 +22,21 @@ function HomeScreen ({ navigation }) {
 					<Text style={styles.buttonText} >Director</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('LoginDirection')}>
+					<Text style={styles.buttonText} >volunteer</Text>
+				</TouchableOpacity>
+				{/* <TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('tableUser')}>
 					<Text style={styles.buttonText} >tableUser</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}
+				</TouchableOpacity> */}
+				{/* <TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('login')}>
 					<Text style={styles.buttonText} >SignIn</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('SignUp')}>
 					<Text style={styles.buttonText} >SignUp</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('lifeguardMap')}>
 					<Text style={styles.buttonText} >lifeguard</Text>

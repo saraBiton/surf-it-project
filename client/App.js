@@ -13,10 +13,10 @@ import MarkerMap from './components/lifeguard/mapOfLocation';
 import SensorRentalManagement from './components/Director/Sensor_rental_management';
 // import calculateDistance from './try/trydis';
 import AppDistance from './components/lifeguard/CalculationDistance';
-import { Login, SignUp } from './components/Login';
+import { Login } from './components/Login';
 import { Table2 } from './components/Users/table2';
 const Stack = createStackNavigator();
-
+// , SignUp
 function App () {
 	return (
 		<NavigationContainer>
@@ -34,7 +34,7 @@ function App () {
 				<Stack.Screen name="Sensor_rental_management" component={SensorRentalManagement} />
 				<Stack.Screen name="AppDistance" component={AppDistance} />
 				<Stack.Screen name="login" component={Login} />
-				<Stack.Screen name="SignUp" component={SignUp} />
+				{/* <Stack.Screen name="SignUp" component={SignUp} /> */}
 				<Stack.Screen name="Table2" component={Table2} />
 			</Stack.Navigator>
 		</NavigationContainer>
