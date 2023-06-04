@@ -21,13 +21,13 @@ sensor_router.route('/:id').get(async (req, res) => {
 	res.json(result);
 });
 
-sensor_router.route('/:id/edit').put(async (req, res) => {
+sensor_router.route('/edit/:id').put(async (req, res) => {
 	const obj = req.body;
 	const result = await sensorController.updateSensor(req.params.id, obj);
 	res.json(result);
 });
 
-sensor_router.route('/:id/delete').delete(async (req, res) => {
+sensor_router.route('/delete/:id').delete(async (req, res) => {
 	const result = await sensorController.deleteSensor(req.params.id);
 	res.json(result);
 });
