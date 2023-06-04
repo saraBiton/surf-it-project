@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import SensorActions from './Sensor_management';
 import TableData from '../table';
 import SensorRentalManagement from './Sensor_rental_management';
-
-function Director ({ navigation }) {
+import { Table2 } from '../Users/table2';
+function Director({ navigation }) {
 	const [activeButton, setActiveButton] = useState(null);
 
 	return (
@@ -12,11 +12,11 @@ function Director ({ navigation }) {
 			<Text style={styles.title}> Welcome to SURF-IT </Text>
 			<Text style={styles.subtitle}>Rental of drowning prevention equipment</Text>
 			<View style={styles.buttonContainer}>
-				<TouchableOpacity style={styles.button}
+				{<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('Sensor_management')}>
 					<Text style={styles.buttonText} >Sensor management</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}
+				/* <TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('Sensor_rental_management')}>
 					<Text style={styles.buttonText} >
                     Sensor rental management
@@ -27,11 +27,17 @@ function Director ({ navigation }) {
 					<Text style={styles.buttonText} >
                     TableData
 					</Text>
+				</TouchableOpacity> */}
+				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('Table2')}>
+					<Text style={styles.buttonText} >
+						User Management
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
 	);
-}
+} 
 
 const styles = StyleSheet.create({
 	container: {

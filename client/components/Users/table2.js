@@ -112,6 +112,10 @@ const Table2 = () => {
 	}, []);
 
 	const styles = StyleSheet.create({
+		table: {
+			backgroundColor: 'red',
+			borderWidth: 2
+		},
 		container: {
 			marginTop: 30,
 			marginHorizontal: 'auto'
@@ -144,7 +148,7 @@ const Table2 = () => {
 			<TouchableOpacity style={[styles.button, { marginBottom: 20 }]}>
 				<Text style={styles.buttonText}>Add user</Text>
 			</TouchableOpacity>
-			<Table borderStyle={{ borderWidth: 2 }}>
+			<Table style={styles.table}>
 				<Row data={tableData.keys} textStyle={styles.headStyle} />
 				<Rows data={tableData.values} textStyle={styles.textStyle} />
 			</Table>
