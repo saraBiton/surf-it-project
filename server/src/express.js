@@ -1,3 +1,7 @@
+/**
+ * הפעלת אפליקציית אקספרס שתומכת גם בווב סוקט
+ */
+
 import cors from 'cors';
 import express from 'express';
 import expressWs from 'express-ws';

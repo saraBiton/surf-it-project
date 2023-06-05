@@ -1,3 +1,7 @@
+/**
+ * טעינת כל בראוטרים לאפליקציה
+ */
+
 import { app } from './express.js';
 import { sensor_ws_router } from './routers/ws/sensor-ws.js';
 import { client_ws_router } from './routers/ws/client-ws.js';
