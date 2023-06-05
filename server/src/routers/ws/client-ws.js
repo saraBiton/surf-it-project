@@ -1,5 +1,8 @@
-/** @type {import ("express-ws").Router} */
+/**
+ * תקשורת וובסוקט עם הקליינט בריאקט
+ */
 
+/** @type {import ("express-ws").Router} */
 import { Router } from 'express';
 
 import sensorController from '../../controllers/sensorController.js';
