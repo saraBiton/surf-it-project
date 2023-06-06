@@ -5,7 +5,8 @@ import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import MarkerMap from './lifeguard/mapOfLocation';
 import TableData from './table';
 import { Login, SignUp } from './Login';
-
+import GoogleMaps from './lifeguard/x';
+import AlertV from './volunteer/Alertv';
 // import calculateDistance from '../try/trydis';
 function HomeScreen ({ navigation }) {
 	const [activeButton, setActiveButton] = useState(null);
@@ -25,6 +26,10 @@ function HomeScreen ({ navigation }) {
 					onPress={() => navigation.navigate('LoginDirection')}>
 					<Text style={styles.buttonText} >volunteer</Text>
 				</TouchableOpacity>
+				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('alert')}>
+					<Text style={styles.buttonText} >alert</Text>
+				</TouchableOpacity>
 				{/* <TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('tableUser')}>
 					<Text style={styles.buttonText} >tableUser</Text>
@@ -40,6 +45,10 @@ function HomeScreen ({ navigation }) {
 				<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('lifeguardMap')}>
 					<Text style={styles.buttonText} >lifeguard</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('x')}>
+					<Text style={styles.buttonText} >x</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
 					onPress={() => { navigation.navigate('Table2'); }} >

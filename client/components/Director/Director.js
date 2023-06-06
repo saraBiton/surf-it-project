@@ -16,6 +16,7 @@ function Director({ navigation }) {
 					onPress={() => navigation.navigate('Sensor_management')}>
 					<Text style={styles.buttonText} >Sensor management</Text>
 				</TouchableOpacity>
+				
 				/* <TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('Sensor_rental_management')}>
 					<Text style={styles.buttonText} >
@@ -32,6 +33,12 @@ function Director({ navigation }) {
 					onPress={() => navigation.navigate('Table2')}>
 					<Text style={styles.buttonText} >
 						User Management
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('Sensor_rental_management')}>
+					<Text style={styles.buttonText} >
+					Sensor rental management
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -61,12 +68,12 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 20
 	},
-	text: {
-		fontSize: 30,
-		fontWeight: 'bold',
-		marginBottom: 20,
-		borderRadius: 5
-	},
+	// text: {
+	// 	fontSize: 30,
+	// 	fontWeight: 'bold',
+	// 	marginBottom: 20,
+	// 	borderRadius: 5
+	// },
 	title: {
 		fontSize: 24,
 		fontWeight: 'bold',
