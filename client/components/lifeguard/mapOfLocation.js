@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, Fragment } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import Alert from "@mui/material/Alert";
 import {
@@ -12,7 +12,7 @@ import { start_ws_client } from "./ws-client";
 
 // import { getClosestPoint } from './distanceApp';
 
-function MarkerMap() {
+function MarkerMap({ navigation }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ",
@@ -42,7 +42,7 @@ function MarkerMap() {
               center={center}
               zoom={16}
             >
-              <Markers />
+              <Markers navigation={navigation} />
             </GoogleMap>
           ) : (
             <Text>Loading...</Text>
@@ -52,7 +52,7 @@ function MarkerMap() {
     </View>
   );
 
-  function Markers({}) {
+  function Markers({ navigation }) {
     const [markers, setMarkers] = useState([]);
 
     start_ws_client((sensor_list) => {
@@ -66,15 +66,18 @@ function MarkerMap() {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         {markers.map((marker) => (
           <Marker
             key={marker._id}
             position={marker.position}
             icon={icons[marker.status]}
+            onClick={() => {
+              navigation.navigate('SensorView', { sensorId: marker._id })
+            }}
           />
         ))}
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

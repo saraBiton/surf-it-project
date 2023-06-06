@@ -2,14 +2,23 @@ import axios from 'axios';
 
 import { basicUrl } from './config';
 
-const getAll = () => axios.get('http://localhost:8000/users');
+const getAll = () => axios.get(basicUrl + `users`);
 
 const getById = (url, userId) => axios.get(`${url}/${userId}`);
 
 const getAllSensors = () =>
-	axios.get(`${basicUrl}sensors`);
+	axios.get(basicUrl + `sensors`);
 
 // const addUser = (url, obj) => axios.post(url, obj);
+
+const sensor = {
+	getAllSensors () {
+		return axios.get(basicUrl + `sensors`);
+	},
+	getById (id) {
+		return axios.get(basicUrl + `sensors/` + id)
+	}
+};
 
 const addItem = async (url, user) => {
 	try {
@@ -66,6 +75,7 @@ export {
 	getById,
 	getAll,
 	updateItem,
-	getAllSensors
+	getAllSensors,
+	sensor
 };
 // איפה המסך של לוגין?
