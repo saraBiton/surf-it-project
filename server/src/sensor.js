@@ -1,3 +1,7 @@
+/**
+ * הדמייה של סנסור חיצוני
+ */
+
 import WebSocket from 'ws';
 import { SetRandomCoordinates } from './RandomCoordinates.js';
 

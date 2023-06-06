@@ -1,3 +1,8 @@
+/**
+ * התקשרות עם מסד הנתונים עבור המשתמש
+ */
+
+import axios from 'axios';
 import { User } from '../Models/userModel.js';
 
 const getAllUsers = async () => {
@@ -51,7 +56,7 @@ async function getDistance (point, locations) {
 
 		try {
 			const { data } = await axios.get(url);
-	  console.log(data);
+			console.log(data);
 			const result = data.results[0];
 			const address = result.formatted_address;
 
@@ -81,11 +86,11 @@ const dijkstra = async () => {
 
 	getDistance(point, activeVolunteers)
 		.then(distances => {
-	  console.log(distances);
-	  // כאן תוכל להשתמש במערך המרחקים כדי להכניס אותם לגרף ולהפעיל עליו את אלגוריתם דייקסטרה
+			console.log(distances);
+		// כאן תוכל להשתמש במערך המרחקים כדי להכניס אותם לגרף ולהפעיל עליו את אלגוריתם דייקסטרה
 		})
 		.catch(error => {
-	  console.error('Error:', error.message);
+			console.error('Error:', error.message);
 		});
 
 	// const distances = [5, 6, 4, 8, 3];

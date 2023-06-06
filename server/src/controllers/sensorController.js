@@ -1,3 +1,7 @@
+/**
+ * התקשרות עם מסד הנתונים עבור הסנסור
+ */
+
 import { Sensor } from '../Models/sensorModel.js';
 import userController from './userController.js';
 

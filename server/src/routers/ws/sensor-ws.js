@@ -1,3 +1,7 @@
+/**
+ * תקשורת וובסוקט עם סנסור חיצוני
+ */
+
 /** @type {import("express-ws").Router} */
 import { Router } from 'express';
 import sensorController from '../../controllers/sensorController.js';
