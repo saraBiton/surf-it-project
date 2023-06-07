@@ -12,7 +12,7 @@ const getAllSensors = async () => {
 };
 
 const getSensorById = (id) => {
-	return Sensor.findById(id);
+	return Sensor.findById(id).populate('userId');
 };
 
 const addSensor = async (obj) => {

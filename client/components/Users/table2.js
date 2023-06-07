@@ -1,5 +1,5 @@
-import { useState, useEffect, Fragment } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { useState, useEffect, Fragment } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 // import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-reanimated-table';
 import {
   Table,
@@ -52,19 +52,19 @@ const Table2 = ({ navigation }) => {
             <Text style={styles.buttonText}>edit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>delete</Text>
-          </TouchableOpacity>
-        </Fragment>
-      );
-    }
-    function ShowSensorsButtons() {
-      return (
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>show sensors</Text>
-        </TouchableOpacity>
-      );
-    }
+					<TouchableOpacity style={styles.button}>
+						<Text style={styles.buttonText}>delete</Text>
+					</TouchableOpacity>
+
+				</Fragment>
+			);
+		};function ShowSensorsButtons () {
+			return (
+				<TouchableOpacity style={styles.button}>
+					<Text style={styles.buttonText}>show sensors</Text>
+				</TouchableOpacity>
+			);
+		};
 
     const r = await getAll().then((res) => res.data);
 

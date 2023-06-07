@@ -14,13 +14,14 @@ import SensorRentalManagement from './components/Director/Sensor_rental_manageme
 import AppDistance from './components/lifeguard/CalculationDistance';
 import { Login } from './components/Login';
 import { Table2 } from './components/Users/table2';
+import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertV from './components/volunteer/Alertv';
 import AddUser from './components/Director/User';
 // import AddUser from './components/Director/User';
 const Stack = createStackNavigator();
 // , SignUp
-function App () {
+function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
@@ -42,6 +43,7 @@ function App () {
 				<Stack.Screen name="x" component={GoogleMaps} />
 				<Stack.Screen name="alert" component={AlertV} />
 				<Stack.Screen name="Adduser" component={AddUser} />
+				<Stack.Screen name='SensorView' component={SensorView} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

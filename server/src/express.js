@@ -5,7 +5,7 @@
 import cors from 'cors';
 import express from 'express';
 import expressWs from 'express-ws';
-// import 'express-async-errors';
+import 'express-async-errors'; // משמש לתפוס שגיאות בתוך אקספרס
 
 const { app } = expressWs(express());
 
