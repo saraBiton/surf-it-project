@@ -5,6 +5,7 @@ import {
   GoogleMap,
   useJsApiLoader,
   Marker,
+  InfoWindow,
   DirectionsService,
   DirectionsRenderer,
 } from "@react-google-maps/api";
@@ -28,32 +29,49 @@ function MarkerMap({ navigation }) {
     lng: 34.626314,
   };
 
-  return (
-    <View style={styles.container}>
-      {/* <Alert.alert('This is a warning alert — check it out!)> */}
-      <View style={styles.mapContainer}>
-        <View style={styles.mapView}>
-          <Alert severity="warning">
-            This is a warning alert — check it out!
-          </Alert>
-          {isLoaded ? (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              zoom={16}
-            >
-              <Markers navigation={navigation} />
-            </GoogleMap>
-          ) : (
-            <Text>Loading...</Text>
-          )}
+  try {
+
+
+
+    return (
+      <View style={styles.container}>
+        {/* <Alert.alert('This is a warning alert — check it out!)> */}
+        <View style={styles.mapContainer}>
+          <View style={styles.mapView}>
+            <Alert severity="warning">
+              This is a warning alert — check it out!
+            </Alert>
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={16}
+              >
+                <Markers navigation={navigation} />
+              </GoogleMap>
+            ) : (
+              <Text>Loading...</Text>
+            )}
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+
+  } catch (error) {
+    console.error(error);
+  }
 
   function Markers({ navigation }) {
     const [markers, setMarkers] = useState([]);
+
+    const [activeMarker, setActiveMarker] = useState(null);
+
+    const handleActiveMarker = (marker) => {
+      if (marker === activeMarker) {
+        return;
+      }
+      setActiveMarker(marker);
+    };
 
     start_ws_client((sensor_list) => {
       setMarkers(sensor_list);
@@ -73,9 +91,22 @@ function MarkerMap({ navigation }) {
             position={marker.position}
             icon={icons[marker.status]}
             onClick={() => {
-              navigation.navigate('SensorView', { sensorId: marker._id })
-            }}
-          />
+              handleActiveMarker(marker._id)
+            }}>
+
+            {activeMarker === marker._id ? (
+              <InfoWindow
+                position={marker.position}
+                onCloseClick={() => { setActiveMarker(null) }}>
+                <h3>
+                  {`Name: ${marker.userId.firstName} ${marker.userId.lastName}`}
+                  <br/>
+                  {`City: ${marker.userId.city}`}
+                  </h3>
+              </InfoWindow>
+            ) : null}
+
+          </Marker>
         ))}
       </Fragment>
     );
