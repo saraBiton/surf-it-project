@@ -42,7 +42,7 @@ function App() {
 				<Stack.Screen name="Table2" component={Table2} />
 				<Stack.Screen name="x" component={GoogleMaps} />
 				<Stack.Screen name="alert" component={AlertV} />
-				<Stack.Screen name="Adduser" component={AddUser} />
+				<Stack.Screen name="AddUser" component={AddUser} />
 				<Stack.Screen name='SensorView' component={SensorView} />
 			</Stack.Navigator>
 		</NavigationContainer>

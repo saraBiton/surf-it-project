@@ -107,8 +107,6 @@ const dijkstra = async (point) => {
 
 	console.log(activeVolunteers);
 
-	// import dijkstra from'dijkstra-shortest-path';
-	// const point = { lng: -117.2465, lat: 25.0522 };
 
 	getDistance(point, activeVolunteers)
 		.then(distances => {
@@ -119,6 +117,9 @@ const dijkstra = async (point) => {
 			console.error('Error:', error.message);
 		});
 
+	
+};
+	// import dijkstra from'dijkstra-shortest-path';
 	// const distances = [5, 6, 4, 8, 3];
 
 	// const graph = new dijkstra.Graph();
@@ -138,7 +139,6 @@ const dijkstra = async (point) => {
 	// return distances
 
 
-};
 
 export default {
 	checkLogin,

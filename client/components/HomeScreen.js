@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import User from './Director/User';
 import LoginScreen from './Director/LoginDirection';
 import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import MarkerMap from './lifeguard/mapOfLocation';
@@ -7,6 +6,7 @@ import TableData from './table';
 import { Login, SignUp } from './Login';
 import GoogleMaps from './lifeguard/x';
 import AlertV from './volunteer/Alertv';
+import AddUser from './Director/User';
 // import calculateDistance from '../try/trydis';
 
 // const Stack = createStackNavigator();
@@ -26,7 +26,7 @@ function HomeScreen ({ navigation }) {
 					<Text style={styles.buttonText} >Director</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
-					onPress={() => navigation.navigate('user')}>
+					onPress={() => navigation.navigate('AddUser')}>
 					<Text style={styles.buttonText} >user</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
