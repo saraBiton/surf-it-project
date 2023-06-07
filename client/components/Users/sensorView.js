@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { sensor } from '../../src/Service';
 function SensorView({ route }) {
 
@@ -6,9 +6,13 @@ function SensorView({ route }) {
 
     const id = route.params.sensorId;
 
-    sensor.getById(id)
+    useEffect(()=>{
+        sensor.getById(id)
         .then(res => res.data)
         .then(sensor => setSensorData(JSON.stringify(sensor, null, "\t")))
+    }, []);
+
+   
 
 
 
