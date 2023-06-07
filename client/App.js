@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './components/HomeScreen';
-import User from './components/Director/User';
 import Director from './components/Director/Director';
 import LoginScreen from './components/Director/LoginDirection';
 import SensorActions, { AddSensor2, DeleteSensor, DeleteSensor2 } from './components/Director/Sensor_management';
@@ -17,6 +16,8 @@ import { Login } from './components/Login';
 import { Table2 } from './components/Users/table2';
 import GoogleMaps from './components/lifeguard/x';
 import AlertV from './components/volunteer/Alertv';
+import AddUser from './components/Director/User';
+// import AddUser from './components/Director/User';
 const Stack = createStackNavigator();
 // , SignUp
 function App () {
@@ -24,7 +25,7 @@ function App () {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Home" component={HomeScreen} />
-				<Stack.Screen name="Adding_tenant_sensor" component={User} />
+				{/* <Stack.Screen name="Adding_tenant_sensor" component={User} /> */}
 				<Stack.Screen name="Director" component={Director} />
 				<Stack.Screen name="LoginDirection" component={LoginScreen} />
 				<Stack.Screen name="Sensor_management" component={SensorActions} />
@@ -40,7 +41,7 @@ function App () {
 				<Stack.Screen name="Table2" component={Table2} />
 				<Stack.Screen name="x" component={GoogleMaps} />
 				<Stack.Screen name="alert" component={AlertV} />
-
+				<Stack.Screen name="Adduser" component={AddUser} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

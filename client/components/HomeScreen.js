@@ -8,6 +8,9 @@ import { Login, SignUp } from './Login';
 import GoogleMaps from './lifeguard/x';
 import AlertV from './volunteer/Alertv';
 // import calculateDistance from '../try/trydis';
+
+// const Stack = createStackNavigator();
+
 function HomeScreen ({ navigation }) {
 	const [activeButton, setActiveButton] = useState(null);
 	return (
@@ -23,6 +26,10 @@ function HomeScreen ({ navigation }) {
 					<Text style={styles.buttonText} >Director</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.button}
+					onPress={() => navigation.navigate('user')}>
+					<Text style={styles.buttonText} >user</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('LoginDirection')}>
 					<Text style={styles.buttonText} >volunteer</Text>
 				</TouchableOpacity>
@@ -30,18 +37,6 @@ function HomeScreen ({ navigation }) {
 					onPress={() => navigation.navigate('alert')}>
 					<Text style={styles.buttonText} >alert</Text>
 				</TouchableOpacity>
-				{/* <TouchableOpacity style={styles.button}
-					onPress={() => navigation.navigate('tableUser')}>
-					<Text style={styles.buttonText} >tableUser</Text>
-				</TouchableOpacity> */}
-				{/* <TouchableOpacity style={styles.button}
-					onPress={() => navigation.navigate('login')}>
-					<Text style={styles.buttonText} >SignIn</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}
-					onPress={() => navigation.navigate('SignUp')}>
-					<Text style={styles.buttonText} >SignUp</Text>
-				</TouchableOpacity> */}
 				<TouchableOpacity style={styles.button}
 					onPress={() => navigation.navigate('lifeguardMap')}>
 					<Text style={styles.buttonText} >lifeguard</Text>

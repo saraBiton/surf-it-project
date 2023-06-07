@@ -46,35 +46,61 @@ const checkLogin = async (username, password) => {
 		return 'Internal server error';
 	}
 };
-async function getDistance (point, locations) {
-	const distances = [];
+async function getDistance (origin, destinations) {
 
-	for (let i = 0; i < locations.length; i++) {
-		const location = locations[i];
 
-		const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
+	const apiKey = 'AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ';
+	const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
+	
+	destinations.forEach(destination => {
+	  url += `${destination.lat},${destination.lng}|`;
+	});
+	
+	url += `&key=${apiKey}`;
+	
+	axios.get(url)
+	  .then(response => {
+		const data = response.data;
+		const rows = data.rows[0].elements;
+	
+		rows.forEach((element, index) => {
+		  const destination = destinations[index];
+		  const travelTime = element.duration.text;
+		  console.log(`Travel time from origin to destination (${destination.lat},${destination.lng}): ${travelTime}`);
+		});
+	  })
+	  .catch(error => {
+		console.log(error);
+	  });
 
-		try {
-			const { data } = await axios.get(url);
-			console.log(data);
-			const result = data.results[0];
-			const address = result.formatted_address;
+	// const distances = [];
 
-			const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=${address}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
+	// for (let i = 0; i < locations.length; i++) {
+	// 	const location = locations[i];
 
-			const distanceResponse = await axios.get(distanceUrl);
-			const distance = distanceResponse.data.rows[0].elements[0].distance.text;
+	// 	const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
 
-			distances.push(distance);
-		} catch (error) {
-			console.error('Error:', error.message);
-		}
-	}
+	// 	try {
+	// 		const { data } = await axios.get(url);
+	// 		console.log(data);
+	// 		const result = data.results[0];
+	// 		const address = result.formatted_address;
 
-	return distances;
+	// 		const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=${address}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
+
+	// 		const distanceResponse = await axios.get(distanceUrl);
+	// 		const distance = distanceResponse.data.rows[0].elements[0].distance.text;
+
+	// 		distances.push(distance);
+	// 	} catch (error) {
+	// 		console.error('Error:', error.message);
+	// 	}
+	// }
+
+	// return distances;
 }
 
-const dijkstra = async () => {
+const dijkstra = async (point) => {
 	const volunteers = await User.find({ role: 'volunteer' });
 
 	const activeVolunteers = volunteers.filter(v => v.volunteer.isActive === true).map(v => { return { lng: v.volunteer.lng, lat: v.volunteer.lat }; });
@@ -82,7 +108,7 @@ const dijkstra = async () => {
 	console.log(activeVolunteers);
 
 	// import dijkstra from'dijkstra-shortest-path';
-	const point = { lng: -117.2465, lat: 25.0522 };
+	// const point = { lng: -117.2465, lat: 25.0522 };
 
 	getDistance(point, activeVolunteers)
 		.then(distances => {
@@ -110,6 +136,8 @@ const dijkstra = async () => {
 	// console.log(shortestPath);
 
 	// return distances
+
+
 };
 
 export default {

@@ -14,9 +14,9 @@ function AlertV() {
     <View>
       <Alert severity="error">SOS!!🆘</Alert>
       {/* <Image src={mapp} alt="mapp" />; */}
-     
+
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>End of event📳</Text>
+        {/* <Text style={styles.buttonText}>End of event📳</Text> */}
       </TouchableOpacity>
     </View>
   );
