@@ -14,7 +14,7 @@ import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
 import AddUser from "../Director/User";
 
-const Table2 = ({ navigation }) => {
+const TableData = ({ navigation }) => {
   const head = ["Full name", "City", "Role", "", ""];
 
   const [tableData, setTableData] = useState({
@@ -81,6 +81,7 @@ const Table2 = ({ navigation }) => {
     });
   }
 };
+
 const styles = StyleSheet.create({
   container: {
     flexWrap: wrap,
@@ -109,4 +110,4 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
 });
-export { Table2 };
+export { TableData };
