@@ -24,7 +24,7 @@ const addSensor = async (obj) => {
 	if (sensor.isSimulateMoves) {
 		sensor.randomCoordinatesLoop();
 	}
-
+	// -	AddSensorForUser
 	// מוסיף את הסנסור לאובייקט המשתמש
 	const user = await userController.getUserById(sensor.userId);
 	if (user) {

@@ -94,12 +94,12 @@ class Sensor {
 
 					{
 						this.on_sos();
-						dijkstraAlgorithm.dijkstra(this.position);
+						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
 					}
 
 				}
-
+				
 				this.ws_client.send(JSON.stringify(this.toSend()));
 
 				await new Promise(

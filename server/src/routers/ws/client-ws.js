@@ -28,10 +28,11 @@ client_ws_router.ws('/client-ws', (ws) => {
 	});
 });
 
-export { client_ws_router };
+
 
 async function sleep (sec) {
 	return await new Promise(
 		(resolve) => setTimeout(resolve, sec * 1000)
 	);
 };
+export { client_ws_router };
