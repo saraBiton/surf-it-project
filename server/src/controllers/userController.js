@@ -75,32 +75,6 @@ async function getDistance(origin, destinations) {
     .catch((error) => {
       console.log(error);
     });
-
-  // const distances = [];
-
-  // for (let i = 0; i < locations.length; i++) {
-  // 	const location = locations[i];
-
-  // 	const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
-
-  // 	try {
-  // 		const { data } = await axios.get(url);
-  // 		console.log(data);
-  // 		const result = data.results[0];
-  // 		const address = result.formatted_address;
-
-  // 		const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=${address}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
-
-  // 		const distanceResponse = await axios.get(distanceUrl);
-  // 		const distance = distanceResponse.data.rows[0].elements[0].distance.text;
-
-  // 		distances.push(distance);
-  // 	} catch (error) {
-  // 		console.error('Error:', error.message);
-  // 	}
-  // }
-
-  // return distances;
 }
 
 const dijkstra = async (point) => {
@@ -123,6 +97,17 @@ const dijkstra = async (point) => {
       console.error("Error:", error.message);
     });
 };
+
+export default {
+  checkLogin,
+  getAllUsers,
+  getUserById,
+  addUser,
+  updateUser,
+  deleteUser,
+  dijkstra,
+};
+
 // import dijkstra from'dijkstra-shortest-path';
 // const distances = [5, 6, 4, 8, 3];
 
@@ -141,13 +126,29 @@ const dijkstra = async (point) => {
 // console.log(shortestPath);
 
 // return distances
+// ------------------------------------
+// const distances = [];
 
-export default {
-  checkLogin,
-  getAllUsers,
-  getUserById,
-  addUser,
-  updateUser,
-  deleteUser,
-  dijkstra,
-};
+// for (let i = 0; i < locations.length; i++) {
+// 	const location = locations[i];
+
+// 	const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
+
+// 	try {
+// 		const { data } = await axios.get(url);
+// 		console.log(data);
+// 		const result = data.results[0];
+// 		const address = result.formatted_address;
+
+// 		const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=${address}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
+
+// 		const distanceResponse = await axios.get(distanceUrl);
+// 		const distance = distanceResponse.data.rows[0].elements[0].distance.text;
+
+// 		distances.push(distance);
+// 	} catch (error) {
+// 		console.error('Error:', error.message);
+// 	}
+// }
+
+// return distances;

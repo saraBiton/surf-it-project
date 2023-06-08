@@ -188,10 +188,10 @@ import {
   Text,
   StyleSheet,
   Button,
-  Picker,
+  ScrollView,
 } from "react-native";
 import { basicUrl } from "../../src/config";
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
 // import { Picker } from 'react-native';
 
 const { addItem } = require("../../src/Service");
@@ -223,81 +223,83 @@ const AddUser = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}> Welcome to SURF-IT </Text>
-      <Text style={styles.subtitle}>
-        Rental of drowning prevention equipment
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="id"
-          onChangeText={(text) => setId(text)}
-          value={id}
-          maxLength={9}
-        />
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}> Welcome to SURF-IT </Text>
+        <Text style={styles.subtitle}>
+          Rental of drowning prevention equipment
+        </Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="id"
+            onChangeText={(text) => setId(text)}
+            value={id}
+            maxLength={9}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="FirstName"
+            onChangeText={(text) => setFirstName(text)}
+            value={firstName}
+            maxLength={20}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="LastName"
+            onChangeText={(text) => setLastName(text)}
+            value={lastName}
+            maxLength={20}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            maxLength={4}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Picker
+            style={styles.input}
+            selectedValue={role}
+            onValueChange={(itemValue) => setRole(itemValue)}
+          >
+            <Picker.Item label="Select role" value="" />
+            {roles.map((item, index) => {
+              return <Picker.Item label={item} value={item} key={index} />;
+            })}
+          </Picker>
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Phone"
+            onChangeText={(text) => setPhones(text)}
+            value={phones}
+            maxLength={10}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="city"
+            onChangeText={(text) => setCity(text)}
+            value={city}
+            maxLength={20}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="continue" onPress={handleSignup} />
+        </View>
       </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="FirstName"
-          onChangeText={(text) => setFirstName(text)}
-          value={firstName}
-          maxLength={20}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="LastName"
-          onChangeText={(text) => setLastName(text)}
-          value={lastName}
-          maxLength={20}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          maxLength={4}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Picker
-          style={styles.input}
-          selectedValue={role}
-          onValueChange={(itemValue) => setRole(itemValue)}
-        >
-          <Picker.Item label="Select role" value="" />
-          {roles.map((item, index) => {
-            return <Picker.Item label={item} value={item} key={index} />;
-          })}
-        </Picker>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Phone"
-          onChangeText={(text) => setPhones(text)}
-          value={phones}
-          maxLength={10}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="city"
-          onChangeText={(text) => setCity(text)}
-          value={city}
-          maxLength={20}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button title="continue" onPress={handleSignup} />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
