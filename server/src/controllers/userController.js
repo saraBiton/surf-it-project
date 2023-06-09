@@ -32,23 +32,19 @@ const deleteUser = async (id) => {
   const user = await User.findByIdAndDelete(id);
   return user;
 };
-const checkLogin = async (username, password) => {
-  console.log(username);
-  console.log(password);
+const checkLogin = async (firstName, lastName, password) => {
+  console.log("&&&&&&&")
+  console.log(firstName);
+  //console.log(lastName);
+  //console.log(password);
   try {
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ firstName, lastName, password });
     console.log(user);
-    if (user) {
-      return console.log(user);
-    } else {
-      return console.error();
-    }
+    return user;
   } catch (error) {
-    console.error(error);
-    return "Internal server error";
+    return error;
   }
 };
-
 
 export default {
   checkLogin,

@@ -17,14 +17,8 @@ const sensor = {
   },
 };
 
-const addItem = async (url, user) => {
-  try {
-    const response = await axios.post(`${url}`, user);
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+const addItem =  (url, item) => axios.post(url, item)
+
 
 export const CheckPassword = async (url, user) => {
   try {

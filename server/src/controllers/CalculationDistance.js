@@ -8,7 +8,7 @@ async function getDistance(origin, destinations) {
 
   url += `&key=${apiKey}`;
 
-  axios
+  axioscon
     .get(url)
     .then((response) => {
       const data = response.data;
@@ -64,12 +64,7 @@ const getActiveVolunteersDistances = async (point) => {
 
   console.log(distances);
 
-  const result = dijkstra(
-    graph,
-    point,
-    distances[0].destination,
-    "defibrillator2"
-  );
+  const result = dijkstra( graph, point, distances[0].destination, "defibrillator2" );
 
   console.log(result.path);
   console.log(result.distance);

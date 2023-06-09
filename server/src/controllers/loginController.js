@@ -5,16 +5,12 @@ const checkLogin = async (user) => {
 	try {
 		console.log(user);
 
-		const director = await Director.find(user);
-		console.log(director);
-		if (director) {
-			return 'Director';
+		const user1 = await User.find(user);
+		console.log(user1);
+		if (user1) {
+			return user1;
 		}
 
-		const lifeguard = await Lifeguard.findOne(user);
-		if (lifeguard) {
-			return 'Lifeguard';
-		}
 
 		return 'Invalid credentials';
 	} catch (error) {

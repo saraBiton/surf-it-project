@@ -1,20 +1,14 @@
 // localhost:3000/login/
 import { Router } from 'express';
-
+import userController from '../controllers/userController.js'
 const login_router = Router();
 
-// router.route('/').post(async (req, res) => {
-//     const { username, password } = req.body;
-//     console.log(username);
-//     console.log(password);
-//     const result = await loginController.checkLogin(username, password);
-//     console.log(result);
-//     res.json(result);
-// })
+
 login_router.route('/').post(async (req, res) => {
-	const { username, password } = req.body;
-	const result = await checkLogin({ username, password });
-	console.log(result);
+	console.log("body", req.body)
+	const { firstName, lastName, password } = req.body;
+	const result = await userController.checkLogin( firstName, lastName, password );
+	console.log("result", result);
 	res.json(result);
 });
 

@@ -26,7 +26,7 @@ const TableData = ({ navigation }) => {
     makeTable();
   }, []);
 
-  return ( 
+  return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, { marginBottom: 20 }]}
@@ -48,7 +48,6 @@ const TableData = ({ navigation }) => {
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>edit</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>delete</Text>
           </TouchableOpacity>
