@@ -11,8 +11,6 @@ import {
 } from "@react-google-maps/api";
 import { start_ws_client } from "./ws-client";
 
-// import { getClosestPoint } from './distanceApp';
-
 function MarkerMap({ navigation }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -30,9 +28,6 @@ function MarkerMap({ navigation }) {
   };
 
   try {
-
-
-
     return (
       <View style={styles.container}>
         {/* <Alert.alert('This is a warning alert — check it out!)> */}
@@ -56,7 +51,6 @@ function MarkerMap({ navigation }) {
         </View>
       </View>
     );
-
   } catch (error) {
     console.error(error);
   }
@@ -91,21 +85,23 @@ function MarkerMap({ navigation }) {
             position={marker.position}
             icon={icons[marker.status]}
             onClick={() => {
-              handleActiveMarker(marker._id)
-            }}>
-
+              handleActiveMarker(marker._id);
+            }}
+          >
             {activeMarker === marker._id ? (
               <InfoWindow
                 position={marker.position}
-                onCloseClick={() => { setActiveMarker(null) }}>
+                onCloseClick={() => {
+                  setActiveMarker(null);
+                }}
+              >
                 <h3>
                   {`Name: ${marker.userId.firstName} ${marker.userId.lastName}`}
-                  <br/>
+                  <br />
                   {`City: ${marker.userId.city}`}
-                  </h3>
+                </h3>
               </InfoWindow>
             ) : null}
-
           </Marker>
         ))}
       </Fragment>
