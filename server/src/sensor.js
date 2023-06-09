@@ -4,7 +4,7 @@
 
 import WebSocket from 'ws';
 import { SetRandomCoordinates } from './RandomCoordinates.js';
-import dijkstraAlgorithm from './controllers/userController.js'
+import dijkstraAlgorithm from './controllers/userController.js';
 
 /**
  * @typedef {({lat: Number, lng: Number})} Position
@@ -38,7 +38,6 @@ class Sensor {
 	on_sos () {
 		this.status = 'SOS';
 		this.inflate_life_jacket();
-
 	}
 
 	on_Attention () {
@@ -97,9 +96,8 @@ class Sensor {
 						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
 					}
-
 				}
-				
+
 				this.ws_client.send(JSON.stringify(this.toSend()));
 
 				await new Promise(
@@ -124,8 +122,6 @@ function SetRandomStatus () {
 
 		if (Math.random() <= 0.4) {
 			status = 'SOS';
-
-
 		}
 	}
 
