@@ -35,7 +35,7 @@ const AddUser = ({ navigation }) => {
     };
     console.log(userData);
     addItem(basicUrl + "users/new", userData)
-      .then(() => {
+      .then(res => {
         alert("Details successfully registered.");
         if (role == "user") navigation.navigate("AddParent", { idUser: id });
       })
@@ -50,7 +50,7 @@ const AddUser = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.title}> Welcome to SURF-IT </Text>
         <Text style={styles.subtitle}>add user</Text>
-        <View style={styles.inputContainer}>
+{        <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="id"
@@ -58,7 +58,7 @@ const AddUser = ({ navigation }) => {
             value={id}
             maxLength={9}
           />
-        </View>
+        </View>}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
