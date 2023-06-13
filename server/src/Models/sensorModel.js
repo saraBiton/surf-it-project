@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-import { SetRandomCoordinates } from '../RandomCoordinates.js';
+import { setRandomCoordinates, setRandomStatus } from '../RandomCoordinates.js';
 
 const Sensor = model('Sensor', new Schema({
 	// sensorID: {type: String, required: true},
@@ -11,6 +11,7 @@ const Sensor = model('Sensor', new Schema({
 	position: { lat: Number, lng: Number },
 	status: {
 		type: String,
+		enum: ['Ok', 'ALERT', 'SOS'],
 		default: 'OK'
 	},
 	inflatedLifeJacket: {
@@ -34,7 +35,8 @@ const Sensor = model('Sensor', new Schema({
 				) {
 					clearInterval(handle);
 				} else {
-					_this.position = SetRandomCoordinates(_this.position);
+					_this.position = setRandomCoordinates(_this.position);
+					_this.status = setRandomStatus(_this.status);
 
 					await _this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
 						if (err.name !== 'DocumentNotFoundError') {
