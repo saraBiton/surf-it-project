@@ -34,16 +34,15 @@ const deleteUser = async (id) => {
 };
 
 const checkLogin = async (firstName, lastName, password) => {
-  console.log("&&&&&&&")
-  console.log(firstName);
-  try {
-    const user = await User.findOne({ firstName, lastName, password });
-    console.log(user);
-    return user;
-  } catch (error) {
-    return error;
-  }
-
+	console.log('&&&&&&&');
+	console.log(firstName);
+	try {
+		const user = await User.findOne({ firstName, lastName, password });
+		console.log(user);
+		return user;
+	} catch (error) {
+		return error;
+	}
 };
 
 export default {
@@ -54,4 +53,3 @@ export default {
 	updateUser,
 	deleteUser
 };
-

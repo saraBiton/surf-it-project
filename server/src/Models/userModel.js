@@ -20,7 +20,8 @@ const userSchema = new Schema({
 				id: this.id,
 				fullName: `${this.firstName} ${this.lastName}`,
 				city: this.city,
-				role: this.role
+				role: this.role,
+				_id: this._id
 			};
 		}
 	},
