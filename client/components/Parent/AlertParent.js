@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 import beach4 from '../../assets/beach4.png';
 
 const AlertParent = () => {
-  const [sensorStatus, setSensorStatus] = useState('');
+  const [sensorStatus, setSensorStatus] = useState('OK');
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const AlertParent = () => {
         resizeMode="cover"
       />
       <Animated.View style={[styles.alertContainer, { opacity: fadeAnim }]}>
-        <Text style={styles.title}>Drowning Prevention Equipment Alerts</Text>
+        <Text style={styles.title}>Drowning Alerts</Text>
         <View style={styles.separator} />
         {sensorStatus === 'OK' ? (
           <Text style={styles.statusOK}>Everything is fine</Text>

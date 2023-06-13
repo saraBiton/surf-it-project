@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Image, View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
+import {
+  Image,
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import Director from "./Director/Director";
 import { addItem, addUser, CheckPassword } from "../src/Service";
 import { basicUrl } from "../src/config";
@@ -33,9 +42,9 @@ const LoginScreen = ({ navigation }) => {
       parent: "AlertParent",
       Director: "Table2",
     };
-    if (user.role === "user") {
+    if (user.role === "user")
       console.log("Entering the application is not authorized.");
-    } else {
+    else {
       navigation.navigate(roles[user.role]);
     }
   };
@@ -44,49 +53,49 @@ const LoginScreen = ({ navigation }) => {
   };
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <Image
-        source={require("../assets/faviconlast.png")}
-        style={styles.icon}
-      />
-      <Text style={styles.title}> Welcome to SURF-IT </Text>
-      <Text style={styles.subtitle}>
-        Rental of drowning prevention equipment
-      </Text>
-      {isFormVisible ? (
-        <>
-          <TextInput
-            style={styles.buttonInput}
-            placeholder="שם פרטי"
-            value={firstName}
-            onChangeText={setfirstName}
-          />
-          <TextInput
-            style={styles.buttonInput}
-            placeholder="שם משפחה"
-            value={lastName}
-            onChangeText={setlastName}
-          />
-          <TextInput
-            style={styles.buttonInput}
-            placeholder="סיסמה"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setpassword}
-          />
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
+      <View style={styles.container}>
+        <Image
+          source={require("../assets/faviconlast.png")}
+          style={styles.icon}
+        />
+        <Text style={styles.title}> Welcome to SURF-IT </Text>
+        <Text style={styles.subtitle}>
+          Rental of drowning prevention equipment
+        </Text>
+        {isFormVisible ? (
+          <>
+            <TextInput
+              style={styles.buttonInput}
+              placeholder="שם פרטי"
+              value={firstName}
+              onChangeText={setfirstName}
+            />
+            <TextInput
+              style={styles.buttonInput}
+              placeholder="שם משפחה"
+              value={lastName}
+              onChangeText={setlastName}
+            />
+            <TextInput
+              style={styles.buttonInput}
+              placeholder="סיסמה"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={setpassword}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <TouchableOpacity
+            style={styles.loginTitle}
+            onPress={handleLoginTitleClick}
+          >
+            <Text style={styles.title}> login </Text>
           </TouchableOpacity>
-        </>
-      ) : (
-        <TouchableOpacity
-          style={styles.loginTitle}
-          onPress={handleLoginTitleClick}
-        >
-          <Text style={styles.title}> login </Text>
-        </TouchableOpacity>
-      )}
-    </View>
+        )}
+      </View>
     </ScrollView>
   );
 };

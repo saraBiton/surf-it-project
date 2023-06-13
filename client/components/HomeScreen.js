@@ -14,7 +14,7 @@ import { Login, SignUp } from "./Login";
 import GoogleMaps from "./lifeguard/x";
 import AlertVolunteer from "./volunteer/AlertVolunteer";
 import AlertParent from "./Parent/AlertParent";
-import AddUser from "./Director/User";
+import AddUser from "./Director/AddUser";
 // import calculateDistance from '../try/trydis';
 
 // const Stack = createStackNavigator();

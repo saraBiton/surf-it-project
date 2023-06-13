@@ -17,8 +17,9 @@ import { Table2 } from './components/Users/table2';
 import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertVolunteer from './components/volunteer/AlertVolunteer';
-import AddUser from './components/Director/User';
+import AddUser from './components/Director/AddUser';
 import AlertParent from './components/Parent/AlertParent';
+import AddParent from './components/Director/AddParent';
 // import AddUser from './components/Director/User';
 const Stack = createStackNavigator();
 // , SignUp
@@ -48,6 +49,8 @@ function App() {
 				<Stack.Screen name="AddUser" component={AddUser} />
 				<Stack.Screen name='SensorView' component={SensorView} />
 				<Stack.Screen name='AlertParent' component={AlertParent} />
+				<Stack.Screen name='AddParent' component={AddParent} />
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

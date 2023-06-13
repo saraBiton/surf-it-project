@@ -28,8 +28,6 @@ client_ws_router.ws('/client-ws', (ws) => {
 	});
 });
 
-
-
 async function sleep (sec) {
 	return await new Promise(
 		(resolve) => setTimeout(resolve, sec * 1000)
