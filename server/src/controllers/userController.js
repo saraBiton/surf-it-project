@@ -6,7 +6,7 @@ import axios from 'axios';
 import { User } from '../Models/userModel.js';
 
 const getAllUsers = async () => {
-	// מביא רשימת משתמשים כולל סנסורים
+	// מביא רשימת משתמשים
 	const users = await User.find();
 	return users.map((user) => user.dataToShow());
 };

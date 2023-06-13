@@ -5,14 +5,14 @@ import { Defibrillator } from '../Models/defibrillatorModel.js';
 // 	const defibrillators = await Defibrillator.find();
 // 	return defibrillators;
 // };
-async function getAllDefibrillators () {
-	try {
-		const defibrillators = await Defibrillator.find();
-		return defibrillators;
-	} catch (error) {
-		throw new Error(`Error while retrieving defibrillators: ${error.message}`);
-	}
-}
+// async function getAllDefibrillators() {
+//   try {
+//     const defibrillators = await Defibrillator.find();
+//     return defibrillators;
+//   } catch (error) {
+//     throw new Error(`Error while retrieving defibrillators: ${error.message}`);
+//   }
+// }
 // const getAllDefibrillators = async () => {
 //   try {
 //     const defibrillators = await Defibrillator.find();
@@ -30,7 +30,11 @@ async function getAllDefibrillators () {
 //     return err;
 //   }
 // };
-
+const getAllDefibrillators = async () => {
+	// מביא רשימת דפיברילטורים
+	const defibrillator = await Defibrillator.find();
+	return defibrillator.map(defibrilator => defibrilator.dataToShow());
+};
 const getDefibrilatorById = async (id) => {
 	return await Defibrillator.findById(id).populate('userId');
 };
