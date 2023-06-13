@@ -28,8 +28,8 @@ function setRandomCoordinates (position) {
 }
 
 function setRandomStatus (status) {
-	if (Math.random() > 0.2) {
-		if (Math.random() > 0.5) {
+	if (Math.random() < 0.08) {
+		if (Math.random() > 0.3) {
 			return 'SOS';
 		} else {
 			return 'ALERT';

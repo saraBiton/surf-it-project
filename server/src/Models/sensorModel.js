@@ -11,7 +11,7 @@ const Sensor = model('Sensor', new Schema({
 	position: { lat: Number, lng: Number },
 	status: {
 		type: String,
-		enum: ['Ok', 'ALERT', 'SOS'],
+		enum: ['OK', 'ALERT', 'SOS'],
 		default: 'OK'
 	},
 	inflatedLifeJacket: {
