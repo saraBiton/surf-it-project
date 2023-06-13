@@ -17,9 +17,11 @@ const userSchema = new Schema({
 		dataToShow () {
 			// מידע להצגה ברשימת כל היוזרים
 			return {
+				id: this.id,
 				fullName: `${this.firstName} ${this.lastName}`,
 				city: this.city,
-				role: this.role
+				role: this.role,
+				_id: this._id
 			};
 		}
 	},
