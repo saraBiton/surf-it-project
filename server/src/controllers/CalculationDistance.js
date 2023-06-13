@@ -1,13 +1,12 @@
-async function getDistance (origin, destinations) {
-	const apiKey = 'AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ';
-	const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
+async function getDistance(origin, destinations) {
+  const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
 
   destinations.forEach((destination) => {
     url += `${destination.lat},${destination.lng}|`;
   });
 
   url += `&key=${apiKey}`;
-
   axios
     .get(url)
     .then((response) => {
