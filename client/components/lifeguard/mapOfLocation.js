@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
+import { googleMapsApiKey } from '../../src/config'
 import Alert from "@mui/material/Alert";
 import {
   GoogleMap,
@@ -14,7 +15,7 @@ import { start_ws_client } from "./ws-client";
 function MarkerMap({ navigation }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ",
+    googleMapsApiKey
   });
 
   const containerStyle = {
@@ -70,7 +71,7 @@ function MarkerMap({ navigation }) {
 
     const icons = {
       OK: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-      ALERT: "https://maps.google.com/mapfiles/ms/icons/orange-dot.png",
+      Attention: "https://maps.google.com/mapfiles/ms/icons/orange-dot.png",
       SOS: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
     };
 
@@ -85,13 +86,25 @@ function MarkerMap({ navigation }) {
               handleActiveMarker(marker._id);
             }}
           >
+            {
+              (marker.status !== 'OK') ? (
+                <InfoWindow
+                  position={marker.position}
+                ><div style={styles.infoWindow}><h1 >{
+                  marker.status === 'Attention' ?
+                    ('This user requires attention!!') :
+                    ('This user is in danger!!')
+                }</h1></div>
+                </InfoWindow>
+              ) : null
+            }
             {activeMarker === marker._id ? (
               <InfoWindow
                 position={marker.position}
                 onCloseClick={() => {
                   setActiveMarker(null);
-                }}
-              >
+                }}>
+
                 <h3>
                   {`Name: ${marker.userId.firstName} ${marker.userId.lastName}`}
                   <br />
@@ -123,5 +136,9 @@ const styles = StyleSheet.create({
     height: "100%",
     /* marginTop: 20, */
   },
+  infoWindow: {
+    backgroundColor: '#e59e9e'
+  }
+
 });
 export default MarkerMap;

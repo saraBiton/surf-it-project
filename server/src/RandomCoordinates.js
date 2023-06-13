@@ -4,7 +4,7 @@
  * ע"מ לייצר אשלייה של תנועה
  */
 
-function SetRandomCoordinates (position) {
+function setRandomCoordinates (position) {
 	let random_num = GetRandomRange(0.000001, 0.000009);
 
 	// הסתברות של 0.5 למספר שלילי
@@ -27,12 +27,32 @@ function SetRandomCoordinates (position) {
 	}
 }
 
+function setRandomStatus (status) {
+	if (Math.random() < 0.005) {
+		if (Math.random() < 0.2) {
+			return 'SOS';
+		} else {
+			return 'Attention';
+		}
+	} else {
+		return 'OK';
+	}
+}
+
 // מייצר מספר אקראי בטווח מסויים
 function GetRandomRange (min, max, round_num = 5) {
 	return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
 
+async function sleep (sec) {
+	return await new Promise(
+		(resolve) => setTimeout(resolve, sec * 1000)
+	);
+};
+
 export {
-	SetRandomCoordinates,
-	GetRandomRange
+	setRandomCoordinates,
+	GetRandomRange,
+	setRandomStatus,
+	sleep
 };
