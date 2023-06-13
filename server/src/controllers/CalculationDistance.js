@@ -1,4 +1,4 @@
-async function getDistance (origin, destinations) {
+async function getDistance(origin, destinations) {
 	const apiKey = 'AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ';
 	const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
 
@@ -8,11 +8,11 @@ async function getDistance (origin, destinations) {
 
 	url += `&key=${apiKey}`;
 
-  axios
-    .get(url)
-    .then((response) => {
-      const data = response.data;
-      const rows = data.rows[0].elements;
+	axios
+		.get(url)
+		.then((response) => {
+			const data = response.data;
+			const rows = data.rows[0].elements;
 
 			rows.forEach((element, index) => {
 				const destination = destinations[index];
@@ -64,12 +64,12 @@ const getActiveVolunteersDistances = async (point) => {
 
 	console.log(distances);
 
-  const result = dijkstra(
-    graph,
-    point,
-    distances[0].destination,
-    "defibrillator2"
-  );
+	const result = dijkstra(
+		graph,
+		point,
+		distances[0].destination,
+		"defibrillator2"
+	);
 
 	console.log(result.path);
 	console.log(result.distance);
