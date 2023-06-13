@@ -15,7 +15,7 @@ import { wrap } from "lodash";
 import AddUser from "../Director/AddUser";
 
 const Table2 = ({ navigation }) => {
-  const head = ["Full name", "City", "Role", "", ""];
+  const head = ["ID", "Full name", "City", "Role", "Sensor", "", ""];
 
   const [tableData, setTableData] = useState({
     keys: head,
