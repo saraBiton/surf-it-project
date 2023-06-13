@@ -17,7 +17,7 @@ const sensor = {
   },
 };
 
-const addItem =  (url, item) => axios.post(url, item)
+const addItem = (url, item) => axios.post(url, item)
 
 
 export const CheckPassword = async (url, user) => {
@@ -30,7 +30,7 @@ export const CheckPassword = async (url, user) => {
   }
 };
 
-const updateItem = (url, userId, obj) => axios.patch(`${url}/${userId}`, obj);
+const updateItem = (url, userId, obj) => axios.put(`${url}/${userId}/edit`, obj);
 
 const sendData = async (url, obj) => {
   try {
