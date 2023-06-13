@@ -12,7 +12,7 @@ import {
 } from "react-native-table-component";
 import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
-import AddUser from "../Director/User";
+import AddUser from "../Director/AddUser";
 
 const Table2 = ({ navigation }) => {
   const head = ["Full name", "City", "Role", "", ""];
@@ -26,7 +26,7 @@ const Table2 = ({ navigation }) => {
     makeTable();
   }, []);
 
-  return ( 
+  return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, { marginBottom: 20 }]}

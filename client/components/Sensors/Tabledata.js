@@ -12,10 +12,9 @@ import {
 } from "react-native-table-component";
 import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
-import AddUser from "../Director/User";
 
 const TableData = ({ navigation }) => {
-  const head = ["Full name", "City", "Role", "", ""];
+  const head = ["name_sensors", "position", "isSimulateMoves", "", ""];
 
   const [tableData, setTableData] = useState({
     keys: head,
@@ -26,7 +25,7 @@ const TableData = ({ navigation }) => {
     makeTable();
   }, []);
 
-  return ( 
+  return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, { marginBottom: 20 }]}
@@ -48,20 +47,20 @@ const TableData = ({ navigation }) => {
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>edit</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>delete</Text>
           </TouchableOpacity>
         </Fragment>
       );
     }
-    function ShowSensorsButtons() {
-      return (
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>show sensors</Text>
-        </TouchableOpacity>
-      );
-    }
+
+    // function ShowSensorsButtons() {
+    //   return (
+    //     <TouchableOpacity style={styles.button}>
+    //       <Text style={styles.buttonText}>show sensors</Text>
+    //     </TouchableOpacity>
+    //   );
+    // }
 
     const r = await getAll().then((res) => res.data);
 
@@ -70,7 +69,7 @@ const TableData = ({ navigation }) => {
     const values = r.reduce((array, value) => {
       const rowValues = Object.values(value);
       rowValues.push(<EditDeleteButtons />);
-      rowValues.push(<ShowSensorsButtons />);
+      // rowValues.push(<ShowSensorsButtons />);
       array.push(rowValues);
       return array;
     }, []);

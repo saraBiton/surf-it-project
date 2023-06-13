@@ -33,9 +33,6 @@ function MarkerMap({ navigation }) {
         {/* <Alert.alert('This is a warning alert — check it out!)> */}
         <View style={styles.mapContainer}>
           <View style={styles.mapView}>
-            <Alert severity="warning">
-              This is a warning alert — check it out!
-            </Alert>
             {isLoaded ? (
               <GoogleMap
                 mapContainerStyle={containerStyle}

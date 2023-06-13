@@ -9,14 +9,14 @@ import {
 } from "react-native";
 import Alert from "@mui/material/Alert";
 // import mapp from "../assets/mapp.png";
-function AlertV() {
+function AlertVolunteer() {
   return (
     <View>
       <Alert severity="error">SOS!!🆘</Alert>
       {/* <Image src={mapp} alt="mapp" />; */}
 
       <TouchableOpacity style={styles.button}>
-        {/* <Text style={styles.buttonText}>End of event📳</Text> */}
+        <Text style={styles.buttonText}>End of event📳</Text>
       </TouchableOpacity>
     </View>
   );
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AlertV;
+export default AlertVolunteer;

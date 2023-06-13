@@ -32,21 +32,18 @@ const deleteUser = async (id) => {
 	const user = await User.findByIdAndDelete(id);
 	return user;
 };
-const checkLogin = async (username, password) => {
-	console.log(username);
-	console.log(password);
-	try {
-		const user = await User.findOne({ username, password });
-		console.log(user);
-		if (user) {
-			return console.log(user);
-		} else {
-			return console.error();
-		}
-	} catch (error) {
-		console.error(error);
-		return 'Internal server error';
-	}
+
+const checkLogin = async (firstName, lastName, password) => {
+  console.log("&&&&&&&")
+  console.log(firstName);
+  try {
+    const user = await User.findOne({ firstName, lastName, password });
+    console.log(user);
+    return user;
+  } catch (error) {
+    return error;
+  }
+
 };
 
 export default {
@@ -58,47 +55,3 @@ export default {
 	deleteUser
 };
 
-// import dijkstra from'dijkstra-shortest-path';
-// const distances = [5, 6, 4, 8, 3];
-
-// const graph = new dijkstra.Graph();
-
-// distances.forEach((distance, index) => {
-//   graph.addNode(index.toString());
-// });
-
-// for (let i = 0; i < distances.length - 1; i++) {
-//   graph.addEdge(i.toString(), (i + 1).toString(), distances[i]);
-// }
-
-// const shortestPath = graph.shortestPath('0', (distances.length - 1).toString());
-
-// console.log(shortestPath);
-
-// return distances
-// ------------------------------------
-// const distances = [];
-
-// for (let i = 0; i < locations.length; i++) {
-// 	const location = locations[i];
-
-// 	const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
-
-// 	try {
-// 		const { data } = await axios.get(url);
-// 		console.log(data);
-// 		const result = data.results[0];
-// 		const address = result.formatted_address;
-
-// 		const distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=${address}&key=AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ`;
-
-// 		const distanceResponse = await axios.get(distanceUrl);
-// 		const distance = distanceResponse.data.rows[0].elements[0].distance.text;
-
-// 		distances.push(distance);
-// 	} catch (error) {
-// 		console.error('Error:', error.message);
-// 	}
-// }
-
-// return distances;
