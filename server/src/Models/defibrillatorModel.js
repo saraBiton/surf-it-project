@@ -29,15 +29,16 @@ const DefibrillatorSchema = new Schema(
       dataToShow() {
         // מידע להצגה ברשימת כל הדפיברילטורים
         return {
-          fullName: `${this.firstName} ${this.lastName}`,
-          city: this.city,
-          role: this.role,
+          isActive: this.isActive,
+          userId: this.userId,
+          position: this.position,
         };
       },
     },
     versionKey: false,
   }
 );
+console.log(DefibrillatorSchema);
 
 const Defibrillator = model("Defibrillator", DefibrillatorSchema);
 
