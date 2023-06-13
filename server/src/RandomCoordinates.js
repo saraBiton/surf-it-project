@@ -28,11 +28,11 @@ function setRandomCoordinates (position) {
 }
 
 function setRandomStatus (status) {
-	if (Math.random() < 0.08) {
-		if (Math.random() > 0.3) {
+	if (Math.random() < 0.005) {
+		if (Math.random() < 0.2) {
 			return 'SOS';
 		} else {
-			return 'ALERT';
+			return 'Attention';
 		}
 	} else {
 		return 'OK';
@@ -44,8 +44,15 @@ function GetRandomRange (min, max, round_num = 5) {
 	return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
 
+async function sleep (sec) {
+	return await new Promise(
+		(resolve) => setTimeout(resolve, sec * 1000)
+	);
+};
+
 export {
 	setRandomCoordinates,
 	GetRandomRange,
-	setRandomStatus
+	setRandomStatus,
+	sleep
 };

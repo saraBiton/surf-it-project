@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-import { setRandomCoordinates, setRandomStatus } from '../RandomCoordinates.js';
+import { setRandomCoordinates, setRandomStatus, sleep } from '../RandomCoordinates.js';
 
 const Sensor = model('Sensor', new Schema({
 	// sensorID: {type: String, required: true},
@@ -11,7 +11,7 @@ const Sensor = model('Sensor', new Schema({
 	position: { lat: Number, lng: Number },
 	status: {
 		type: String,
-		enum: ['OK', 'ALERT', 'SOS'],
+		enum: ['OK', 'Attention', 'SOS'],
 		default: 'OK'
 	},
 	inflatedLifeJacket: {
@@ -23,33 +23,59 @@ const Sensor = model('Sensor', new Schema({
 	methods: {
 		randomCoordinatesLoop () {
 			// פונ' סימולציית תזוזה
-			const ms = 700;
+			const sec = 0.3;
 
 			const _this = this;
 
-			const handle = setInterval(async function intervalRandomLoop () {
-				if (
-					_this.$isDeleted() ||
+			intervalRandomLoop();
+
+			/* let handle = setInterval( */
+			async function intervalRandomLoop () {
+				let loopIsRunning = true;
+
+				while (loopIsRunning) {
+					if (
+						_this.$isDeleted() ||
 					!_this.isActive ||
 					!_this.isSimulateMoves
-				) {
-					clearInterval(handle);
-				} else {
-					_this.position = setRandomCoordinates(_this.position);
-					_this.status = setRandomStatus(_this.status);
+					) {
+						loopIsRunning = false;
+					} else {
+						_this.position = setRandomCoordinates(_this.position);
+						_this.status = setRandomStatus(_this.status);
 
-					await _this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
-						if (err.name !== 'DocumentNotFoundError') {
-							throw err;
+						await _this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
+							if (err.name === 'DocumentNotFoundError') {
+								loopIsRunning = false;
+							} else {
+								throw err;
+							}
+						});
+
+						if (_this.status !== 'OK') {
+							switch (_this.status) {
+								case 'Attention':
+									_this.onAttention();
+									break;
+								case 'SOS':
+									_this.onSos();
+									break;
+
+								default:
+									break;
+							}
+							await sleep(5);
 						}
-					});
+
+						await sleep(sec);
+					}
 				}
-			}, ms);
+			}
 		},
 
 		onSos () {
 			this.status = 'SOS';
-			this.inflatedLifeJacket();
+			this.inflatedLifeJacketNow();
 		},
 
 		onAttention () {

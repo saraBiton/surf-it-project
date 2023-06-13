@@ -30,7 +30,7 @@ const AlertParent = () => {
         <View style={styles.separator} />
         {sensorStatus === 'OK' ? (
           <Text style={styles.statusOK}>Everything is fine</Text>
-        ) : sensorStatus === 'ALERT' ? (
+        ) : sensorStatus === 'Attention' ? (
           <Text style={styles.statusAlert}>Warning: Sensor Alert</Text>
         ) : (
           <Text style={styles.statusSOS}>Serious Alert: SOS Mode</Text>
