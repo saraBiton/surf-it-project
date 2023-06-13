@@ -2,7 +2,6 @@
  * התקשרות עם מסד הנתונים עבור המשתמש
  */
 
-import axios from 'axios';
 import { User } from '../Models/userModel.js';
 
 const getAllUsers = async () => {

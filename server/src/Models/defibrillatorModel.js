@@ -31,7 +31,8 @@ const DefibrillatorSchema = new Schema(
 				return {
 					isActive: this.isActive,
 					userId: this.userId,
-					position: this.position
+					position: this.position,
+					_id: this._id
 				};
 			}
 		},

@@ -1,35 +1,5 @@
 import { Defibrillator } from '../Models/defibrillatorModel.js';
 
-// const getAllDefibrillators = async () => {
-// 	// מביא רשימת משתמשים כולל סנסורים
-// 	const defibrillators = await Defibrillator.find();
-// 	return defibrillators;
-// };
-// async function getAllDefibrillators() {
-//   try {
-//     const defibrillators = await Defibrillator.find();
-//     return defibrillators;
-//   } catch (error) {
-//     throw new Error(`Error while retrieving defibrillators: ${error.message}`);
-//   }
-// }
-// const getAllDefibrillators = async () => {
-//   try {
-//     const defibrillators = await Defibrillator.find();
-//     return defibrillators;
-//   } catch (error) {
-//     throw new Error(`Error while retrieving defibrillators: ${error.message}`);
-//   }
-// };
-
-// const getAllDefibrillators = async () => {
-//   try {
-//     const defibrillators = await Defibrillator.find();
-//     return defibrillators;
-//   } catch (err) {
-//     return err;
-//   }
-// };
 const getAllDefibrillators = async () => {
 	// מביא רשימת דפיברילטורים
 	const defibrillator = await Defibrillator.find();
@@ -48,8 +18,8 @@ const addDefibrilator = async (obj) => {
 const updateDefibrilator = async (id, obj) => {
 	console.log('obj', obj);
 
-	const defibrillator = await Defibrillator.findByIdAndUpdate(id, obj).populate('userId');
-	return defibrillator;
+	await Defibrillator.findByIdAndUpdate(id, obj).populate('userId');
+	return await getDefibrilatorById(id);
 };
 
 const deleteDefibrilator = async (id) => {
