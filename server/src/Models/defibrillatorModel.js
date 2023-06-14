@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { User } from "./userModel.js";
+import { Schema, model } from 'mongoose';
+import { User } from './userModel.js';
 
 const DefibrillatorSchema = new Schema(
 	{
@@ -41,6 +41,6 @@ const DefibrillatorSchema = new Schema(
 );
 console.log(DefibrillatorSchema);
 
-const Defibrillator = model("Defibrillator", DefibrillatorSchema);
+const Defibrillator = model('Defibrillator', DefibrillatorSchema);
 
 export { Defibrillator };

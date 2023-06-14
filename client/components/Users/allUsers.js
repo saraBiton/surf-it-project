@@ -12,7 +12,6 @@ import {
 } from "react-native-table-component";
 import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
-import AddUser from "./AddUser";
 import { deleteItem } from '../../src/Service';
 import { basicUrl } from "../../src/config";
 
