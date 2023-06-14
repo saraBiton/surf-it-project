@@ -189,7 +189,6 @@ import MarkerMap from "./lifeguard/mapOfLocation";
 import axios from "axios";
 import AlertVolunteer from "./volunteer/AlertVolunteer";
 import AlertParent from "./Parent/AlertParent";
-import { Table2 } from "./Users/table2";
 import { AllUsers } from "./Users/allUsers";
 
 const LoginScreen = ({ navigation }) => {

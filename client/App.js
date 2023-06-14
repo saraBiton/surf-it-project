@@ -14,7 +14,6 @@ import SensorRentalManagement from './components/Director/Sensor_rental_manageme
 import AppDistance from './components/lifeguard/CalculationDistance';
 import { Login } from './components/Login';
 import { AllUsers } from './components/Users/allUsers';
-import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertVolunteer from './components/volunteer/AlertVolunteer';
 import AddUser from './components/Users/AddUser';
@@ -49,7 +48,6 @@ function App() {
 				<Stack.Screen name="AlertVolunteer" component={AlertVolunteer} />
 				<Stack.Screen name="AddUser" component={AddUser} />
 				<Stack.Screen name="EditUser" component={EditUser} />
-				<Stack.Screen name='SensorView' component={SensorView} />
 				<Stack.Screen name='AlertParent' component={AlertParent} />
 				<Stack.Screen name='AddParent' component={AddParent} />
 
