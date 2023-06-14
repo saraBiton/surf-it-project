@@ -8,13 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import MarkerMap from "./lifeguard/mapOfLocation";
-import TableData from "./table";
-import { Login, SignUp } from "./Login";
-import GoogleMaps from "./lifeguard/x";
-import AlertVolunteer from "./volunteer/AlertVolunteer";
-import AlertParent from "./Parent/AlertParent";
-import AddUser from "./Users/AddUser";
+
 // import calculateDistance from '../try/trydis';
 
 // const Stack = createStackNavigator();
@@ -69,6 +63,7 @@ function HomeScreen({ navigation }) {
           >
             <Text style={styles.buttonText}>x</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -77,6 +72,15 @@ function HomeScreen({ navigation }) {
           >
             <Text style={styles.buttonText}>test</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("AllDefibrilators");
+            }}>
+            <Text style={styles.buttonText}> Defibrilators table </Text>
+          </TouchableOpacity>
+
         </View>
       </View>
     </ScrollView>

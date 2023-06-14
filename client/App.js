@@ -10,7 +10,6 @@ import { basicUrl } from './src/config';
 import TableData from './components/table';
 import MarkerMap from './components/lifeguard/mapOfLocation';
 import SensorRentalManagement from './components/Director/Sensor_rental_management';
-// import calculateDistance from './try/trydis';
 import AppDistance from './components/lifeguard/CalculationDistance';
 import { Login } from './components/Login';
 import { AllUsers } from './components/Users/allUsers';
@@ -20,7 +19,9 @@ import AddUser from './components/Users/AddUser';
 import AlertParent from './components/Parent/AlertParent';
 import AddParent from './components/Director/AddParent';
 import { EditUser } from './components/Users/editUser'
-// import AddUser from './components/Director/User';
+
+import { AllDefibrilators } from './components/Defibrilators/AllDefibrilators'
+
 const Stack = createStackNavigator();
 // , SignUp
 function App() {
@@ -50,6 +51,7 @@ function App() {
 				<Stack.Screen name="EditUser" component={EditUser} />
 				<Stack.Screen name='AlertParent' component={AlertParent} />
 				<Stack.Screen name='AddParent' component={AddParent} />
+				<Stack.Screen name='AllDefibrilators' component={AllDefibrilators} />
 
 			</Stack.Navigator>
 		</NavigationContainer>
