@@ -10,9 +10,7 @@ user_router.route('/').get(async (req, res) => {
 
 user_router.route('/new').post(async (req, res) => {
 	const obj = req.body;
-	console.log('obj: ', obj);
 	const result = await userControllers.addUser(obj);
-	console.log(result);
 	res.json(result);
 });
 

@@ -4,7 +4,7 @@ import { basicUrl } from "./config";
 
 const getAll = () => axios.get(basicUrl + `users`);
 
-const getById = (url, userId) => axios.get(`${url}/${userId}`);
+
 
 const getAllSensors = () => axios.get(basicUrl + `sensors`);
 
@@ -17,7 +17,11 @@ const sensor = {
   },
 };
 
-const addItem = (url, item) => axios.post(url, item)
+const getAllItems = (url) => axios.get(url);
+const getById = (url, id) => axios.get(`${url}/${id}`);
+const addItem = (url, item) => axios.post(url, item);
+const updateItem = (url, id, obj) => axios.put(`${url}/${id}/edit`, obj);
+const deleteItem = (url, id) => axios.delete(`${url}/${id}/delete`);
 
 
 export const CheckPassword = async (url, user) => {
@@ -30,7 +34,7 @@ export const CheckPassword = async (url, user) => {
   }
 };
 
-const updateItem = (url, userId, obj) => axios.put(`${url}/${userId}/edit`, obj);
+
 
 const sendData = async (url, obj) => {
   try {
@@ -52,11 +56,16 @@ const DeleteSensor = async (url, sensor) => {
 
 export {
   DeleteSensor,
-  sendData,
-  addItem,
-  getById,
-  getAll,
-  updateItem,
   getAllSensors,
   sensor,
+
+  sendData,
+
+  getAll,
+
+  addItem,
+  getById,
+  updateItem,
+  deleteItem,
+  getAllItems
 };

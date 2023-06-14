@@ -12,7 +12,11 @@ import {
 } from "react-native-table-component";
 import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
-import AddUser from "../Director/AddUser";
+import AddUser from "./AddUser";
+import { deleteItem } from '../../src/Service';
+import { basicUrl } from "../../src/config";
+
+const usersURL = basicUrl + 'users';
 
 const AllUsers = ({ navigation, route }) => {
 	const head = ["ID", "Full name", "City", "Role", "Sensor", "", ""];
@@ -25,6 +29,11 @@ const AllUsers = ({ navigation, route }) => {
 	useEffect(() => {
 		makeTable();
 	}, [route]);
+
+	const deleteUser = (id) => {
+		deleteItem(usersURL, id)
+			.then(() => setTableData(tableData));
+	};
 
 	return (
 		<View style={styles.container}>
@@ -51,7 +60,7 @@ const AllUsers = ({ navigation, route }) => {
 						<Text style={styles.buttonText}>edit</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity style={styles.button} onPress={() => { deleteUser(user__id) }}>
 						<Text style={styles.buttonText}>delete</Text>
 					</TouchableOpacity>
 				</Fragment>

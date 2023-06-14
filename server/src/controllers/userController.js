@@ -21,8 +21,6 @@ const addUser = async (obj) => {
 };
 
 const updateUser = async (id, obj) => {
-	console.log('obj', obj);
-
 	const user = await User.findByIdAndUpdate(id, obj).populate('sensors');
 	return user;
 };

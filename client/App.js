@@ -17,7 +17,7 @@ import { AllUsers } from './components/Users/allUsers';
 import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertVolunteer from './components/volunteer/AlertVolunteer';
-import AddUser from './components/Director/AddUser';
+import AddUser from './components/Users/AddUser';
 import AlertParent from './components/Parent/AlertParent';
 import AddParent from './components/Director/AddParent';
 import { EditUser } from './components/Users/editUser'

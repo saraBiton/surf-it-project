@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { basicUrl } from "../../src/config";
 import { Picker } from "@react-native-picker/picker";
-import AddParent from "./AddParent";
+import AddParent from "../Director/AddParent";
 const { addItem } = require("../../src/Service");
 const roles = ["user", "volunteer", "parent", "lifeguard"];
 
