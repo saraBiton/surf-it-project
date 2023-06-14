@@ -72,7 +72,7 @@ function HomeScreen({ navigation }) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("Table2");
+              navigation.navigate("AllUsers");
             }}
           >
             <Text style={styles.buttonText}>test</Text>

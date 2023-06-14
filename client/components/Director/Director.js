@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import SensorActions from "./Sensor_management";
 import TableData from "../table";
 import SensorRentalManagement from "./Sensor_rental_management";
-import { Table2 } from "../Users/table2";
+import { AllUsers } from "../Users/allUsers";
 function Director({ navigation }) {
   const [activeButton, setActiveButton] = useState(null);
 
@@ -37,7 +37,7 @@ function Director({ navigation }) {
         }
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Table2")}
+          onPress={() => navigation.navigate("AllUsers")}
         >
           <Text style={styles.buttonText}>User Management</Text>
         </TouchableOpacity>

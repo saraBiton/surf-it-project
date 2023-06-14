@@ -190,6 +190,7 @@ import axios from "axios";
 import AlertVolunteer from "./volunteer/AlertVolunteer";
 import AlertParent from "./Parent/AlertParent";
 import { Table2 } from "./Users/table2";
+import { AllUsers } from "./Users/allUsers";
 
 const LoginScreen = ({ navigation }) => {
   const [firstName, setfirstName] = useState("");
@@ -211,7 +212,7 @@ const LoginScreen = ({ navigation }) => {
       volunteer: "AlertVolunteer",
       lifeguard: "lifeguardMap",
       parent: "AlertParent",
-      Director: "Table2",
+      Director: "AllUsers",
     };
     if (user.role === "user")
       console.log("Entering the application is not authorized.");

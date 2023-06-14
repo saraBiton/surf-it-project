@@ -13,19 +13,20 @@ import SensorRentalManagement from './components/Director/Sensor_rental_manageme
 // import calculateDistance from './try/trydis';
 import AppDistance from './components/lifeguard/CalculationDistance';
 import { Login } from './components/Login';
-import { Table2 } from './components/Users/table2';
+import { AllUsers } from './components/Users/allUsers';
 import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertVolunteer from './components/volunteer/AlertVolunteer';
 import AddUser from './components/Director/AddUser';
 import AlertParent from './components/Parent/AlertParent';
 import AddParent from './components/Director/AddParent';
+import { EditUser } from './components/Users/editUser'
 // import AddUser from './components/Director/User';
 const Stack = createStackNavigator();
 // , SignUp
 function App() {
 	return (
-		
+
 		<NavigationContainer>
 			<Stack.Navigator>
 
@@ -43,10 +44,11 @@ function App() {
 				<Stack.Screen name="AppDistance" component={AppDistance} />
 				<Stack.Screen name="login" component={Login} />
 				{/* <Stack.Screen name="SignUp" component={SignUp} /> */}
-				<Stack.Screen name="Table2" component={Table2} />
+				<Stack.Screen name="AllUsers" component={AllUsers} />
 				<Stack.Screen name="x" component={GoogleMaps} />
 				<Stack.Screen name="AlertVolunteer" component={AlertVolunteer} />
 				<Stack.Screen name="AddUser" component={AddUser} />
+				<Stack.Screen name="EditUser" component={EditUser} />
 				<Stack.Screen name='SensorView' component={SensorView} />
 				<Stack.Screen name='AlertParent' component={AlertParent} />
 				<Stack.Screen name='AddParent' component={AddParent} />
