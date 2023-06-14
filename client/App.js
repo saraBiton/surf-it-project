@@ -20,7 +20,8 @@ import AlertParent from './components/Parent/AlertParent';
 import AddParent from './components/Director/AddParent';
 import { EditUser } from './components/Users/editUser'
 
-import { AllDefibrilators } from './components/Defibrilators/AllDefibrilators'
+import { AllDefibrilators } from './components/Defibrilators/AllDefibrilators';
+import { AddDefibrilator } from './components/Defibrilators/AddDefibrilator'
 
 const Stack = createStackNavigator();
 // , SignUp
@@ -52,6 +53,8 @@ function App() {
 				<Stack.Screen name='AlertParent' component={AlertParent} />
 				<Stack.Screen name='AddParent' component={AddParent} />
 				<Stack.Screen name='AllDefibrilators' component={AllDefibrilators} />
+				<Stack.Screen name='AddDefibrilator' component={AddDefibrilator} />
+
 
 			</Stack.Navigator>
 		</NavigationContainer>

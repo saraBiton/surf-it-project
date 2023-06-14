@@ -12,7 +12,9 @@ import { basicUrl } from "../../src/config";
 import { Picker } from "@react-native-picker/picker";
 import AddParent from "../Director/AddParent";
 const { addItem } = require("../../src/Service");
+
 const roles = ["user", "volunteer", "parent", "lifeguard"];
+const theURL = basicUrl + 'users';
 
 const AddUser = ({ navigation }) => {
   const [id, setId] = useState("");
@@ -34,7 +36,7 @@ const AddUser = ({ navigation }) => {
       city,
     };
     console.log(userData);
-    addItem(basicUrl + "users/new", userData)
+    addItem(theURL, userData)
       .then(res => {
         alert("Details successfully registered.");
         if (role == "user") navigation.navigate("AddParent", { idUser: id });
@@ -50,7 +52,7 @@ const AddUser = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.title}> Welcome to SURF-IT </Text>
         <Text style={styles.subtitle}>add user</Text>
-{        <View style={styles.inputContainer}>
+        {<View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="id"

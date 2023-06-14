@@ -19,7 +19,7 @@ const sensor = {
 
 const getAllItems = (url) => axios.get(url);
 const getById = (url, id) => axios.get(`${url}/${id}`);
-const addItem = (url, item) => axios.post(url, item);
+const addItem = (url, item) => axios.post(`${url}/new`, item);
 const updateItem = (url, id, obj) => axios.put(`${url}/${id}/edit`, obj);
 const deleteItem = (url, id) => axios.delete(`${url}/${id}/delete`);
 

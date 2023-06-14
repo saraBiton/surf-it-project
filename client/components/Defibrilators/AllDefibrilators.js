@@ -37,7 +37,7 @@ const AllDefibrilators = ({ navigation, route }) => {
 		<View style={styles.container}>
 			<TouchableOpacity
 				style={[styles.button, { marginBottom: 20 }]}
-
+				onPress={()=>{navigation.navigate('AddDefibrilator')}}
 			>
 				<Text style={styles.buttonText}>Add defibrilator</Text>
 			</TouchableOpacity>
@@ -74,8 +74,8 @@ const AllDefibrilators = ({ navigation, route }) => {
 			const row = [
 				value.id,
 				(value.isActive) ? 'True' : 'False',
-				(value.userId) ?
-					(`${value.userId.firstName} ${value.userId.lastName}`) : ''
+				(value.isActive && value.userId) ?
+					(`${value.userId.firstName} ${value.userId.lastName}`) : 'None'
 			];
 
 			row.push(<EditDeleteButtons />);
