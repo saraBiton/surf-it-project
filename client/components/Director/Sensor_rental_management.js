@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import User from "./AddUser";
 
 // ניהול השכרת חיישנים
 function SensorRentalManagement({ navigation }) {

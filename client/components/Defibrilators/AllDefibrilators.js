@@ -1,6 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-// import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-reanimated-table';
 import {
 	Table,
 	TableWrapper,
@@ -10,15 +9,15 @@ import {
 	Cols,
 	Cell,
 } from "react-native-table-component";
-import { getAll } from "../../src/Service";
+import { getAllItems } from "../../src/Service";
 import { wrap } from "lodash";
 import { deleteItem } from '../../src/Service';
 import { basicUrl } from "../../src/config";
 
-const usersURL = basicUrl + 'users';
+const theURL = basicUrl + 'defibrilators';
 
-const AllUsers = ({ navigation, route }) => {
-	const head = ["ID", "Full name", "City", "Role", "Sensor", "", ""];
+const AllDefibrilators = ({ navigation, route }) => {
+	const head = ["ID", "Is active", "Username", ""];
 
 	const [tableData, setTableData] = useState({
 		keys: head,
@@ -29,8 +28,8 @@ const AllUsers = ({ navigation, route }) => {
 		makeTable();
 	}, [route]);
 
-	const deleteUser = (id) => {
-		deleteItem(usersURL, id)
+	const deleteRow = (id) => {
+		deleteItem(theURL, id)
 			.then(() => setTableData(tableData));
 	};
 
@@ -38,9 +37,9 @@ const AllUsers = ({ navigation, route }) => {
 		<View style={styles.container}>
 			<TouchableOpacity
 				style={[styles.button, { marginBottom: 20 }]}
-				onPress={() => navigation.navigate("AddUser")}
+				onPress={()=>{navigation.navigate('AddDefibrilator')}}
 			>
-				<Text style={styles.buttonText}>Add user</Text>
+				<Text style={styles.buttonText}>Add defibrilator</Text>
 			</TouchableOpacity>
 			<Table borderStyle={{ borderWidth: 2 }}>
 				<Row data={tableData.keys} textStyle={styles.headStyle} />
@@ -50,38 +49,37 @@ const AllUsers = ({ navigation, route }) => {
 	);
 
 	async function makeTable() {
-		function EditDeleteButtons({ user__id }) {
+		function EditDeleteButtons({ }) {
 			return (
 				<Fragment>
 					<TouchableOpacity
 						style={styles.button}
-						onPress={() => navigation.navigate("EditUser", { user__id })}>
+
+					>
 						<Text style={styles.buttonText}>edit</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.button} onPress={() => { deleteUser(user__id) }}>
+					<TouchableOpacity style={styles.button} onPress={() => { deleteRow(user__id) }}>
 						<Text style={styles.buttonText}>delete</Text>
 					</TouchableOpacity>
 				</Fragment>
 			);
 		}
-		function ShowSensorsButtons() {
-			return (
-				<TouchableOpacity style={styles.button}>
-					<Text style={styles.buttonText}>show sensors</Text>
-				</TouchableOpacity>
-			);
-		}
 
-		const r = await getAll().then((res) => res.data);
+		const r = await getAllItems(theURL).then((res) => res.data);
 
 		const keys = head;
 
 		const values = r.reduce((array, value) => {
-			const rowValues = Object.values(value);
-			rowValues.push(<EditDeleteButtons user__id={value._id} />);
-			rowValues.push(<ShowSensorsButtons />);
-			array.push(rowValues);
+			const row = [
+				value.id,
+				(value.isActive) ? 'True' : 'False',
+				(value.isActive && value.userId) ?
+					(`${value.userId.firstName} ${value.userId.lastName}`) : 'None'
+			];
+
+			row.push(<EditDeleteButtons />);
+			array.push(row);
 			return array;
 		}, []);
 
@@ -119,4 +117,5 @@ const styles = StyleSheet.create({
 		margin: "auto",
 	},
 });
-export { AllUsers };
+
+export { AllDefibrilators };

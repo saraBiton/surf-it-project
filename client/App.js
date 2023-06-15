@@ -10,18 +10,19 @@ import { basicUrl } from './src/config';
 import TableData from './components/table';
 import MarkerMap from './components/lifeguard/mapOfLocation';
 import SensorRentalManagement from './components/Director/Sensor_rental_management';
-// import calculateDistance from './try/trydis';
 import AppDistance from './components/lifeguard/CalculationDistance';
 import { Login } from './components/Login';
 import { AllUsers } from './components/Users/allUsers';
-import { SensorView } from './components/Users/sensorView'
 import GoogleMaps from './components/lifeguard/x';
 import AlertVolunteer from './components/volunteer/AlertVolunteer';
-import AddUser from './components/Director/AddUser';
+import AddUser from './components/Users/AddUser';
 import AlertParent from './components/Parent/AlertParent';
 import AddParent from './components/Director/AddParent';
 import { EditUser } from './components/Users/editUser'
-// import AddUser from './components/Director/User';
+
+import { AllDefibrilators } from './components/Defibrilators/AllDefibrilators';
+import { AddDefibrilator } from './components/Defibrilators/AddDefibrilator'
+
 const Stack = createStackNavigator();
 // , SignUp
 function App() {
@@ -49,9 +50,11 @@ function App() {
 				<Stack.Screen name="AlertVolunteer" component={AlertVolunteer} />
 				<Stack.Screen name="AddUser" component={AddUser} />
 				<Stack.Screen name="EditUser" component={EditUser} />
-				<Stack.Screen name='SensorView' component={SensorView} />
 				<Stack.Screen name='AlertParent' component={AlertParent} />
 				<Stack.Screen name='AddParent' component={AddParent} />
+				<Stack.Screen name='AllDefibrilators' component={AllDefibrilators} />
+				<Stack.Screen name='AddDefibrilator' component={AddDefibrilator} />
+
 
 			</Stack.Navigator>
 		</NavigationContainer>

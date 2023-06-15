@@ -62,7 +62,7 @@ async function getDistance(origin, destinations) {
 }
 
 const getActiveVolunteersDistances = async (point) => {
-  const volunteers = await User.find({ role: "volunteer" });
+	const volunteers = await User.find({ role: 'volunteer' });
 
   const activeVolunteers = volunteers
     .filter((v) => v.volunteer.isActive === true)
@@ -73,8 +73,8 @@ const getActiveVolunteersDistances = async (point) => {
 
   const distancesVolunteers = await getDistance(point, activeVolunteers);
 
-  console.log(distances);
 
+	console.log(distances);
 
 
   const defibrillators = await Defibrillator.find();
@@ -91,16 +91,16 @@ const getActiveVolunteersDistances = async (point) => {
   console.log(distances);
 
 
+	const result = dijkstra(
+		graph,
+		point,
+		distances[0].destination,
+		'defibrillator2'
+	);
 
-  const result = dijkstraGraph(
-    graph,
-    point,
-    distancesVolunteers[0].destination,
-    "defibrillator2"
-  );
 
-  console.log(result.path);
-  console.log(result.distance);
+	console.log(result.path);
+	console.log(result.distance);
 };
 export default getActiveVolunteersDistances;
 

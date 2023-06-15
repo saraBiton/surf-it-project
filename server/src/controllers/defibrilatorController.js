@@ -2,7 +2,7 @@ import { Defibrillator } from '../Models/defibrillatorModel.js';
 
 const getAllDefibrillators = async () => {
 	// מביא רשימת דפיברילטורים
-	const defibrillator = await Defibrillator.find();
+	const defibrillator = await Defibrillator.find().populate('userId');
 	return defibrillator.map(defibrilator => defibrilator.dataToShow());
 };
 const getDefibrilatorById = async (id) => {
