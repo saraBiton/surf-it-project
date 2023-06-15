@@ -18,7 +18,7 @@ import { json } from "react-router-dom";
 
 const theURL = basicUrl + 'defibrilators';
 
-const AddDefibrilator = () => {
+const AddDefibrilator = ({ navigation }) => {
 
     const [defibrilator, setDefibrilator] = useState({
         id: undefined,
@@ -33,15 +33,17 @@ const AddDefibrilator = () => {
 
     const submitHandle = async () => {
         addItem(theURL, defibrilator).then((r) => {
-            r.data.
-                navigation.navigate('AllDefibrilators', {})
+
+            navigation.navigate('AllDefibrilators', {})
         }).catch((error) => {
-            setErrorMessage(error.response.data.message);
-        })
 
+            if (error?.response?.data?.message) {
+                setErrorMessage(error.response.data.message);
+            } else if (error.message) {
+                setErrorMessage(error.message);
+            }
+        });
     };
-
-    window.setErrorMessage = setErrorMessage;
 
     useEffect(() => {
         getAllItems(basicUrl + 'users')
