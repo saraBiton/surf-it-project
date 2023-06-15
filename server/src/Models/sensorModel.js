@@ -77,9 +77,7 @@ const Sensor = model('Sensor', new Schema({
 		onSos () {
 			this.status = 'SOS';
 			this.inflatedLifeJacketNow();
-			getActiveVolunteersDistances(this.position).catch(
-				error => console.error(error)
-			);
+			getActiveVolunteersDistances(this.position);
 		},
 
 		onAttention () {
@@ -88,11 +86,6 @@ const Sensor = model('Sensor', new Schema({
 
 		inflatedLifeJacketNow () {
 			this.inflatedLifeJacket = true;
-			this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
-				if (err.name !== 'DocumentNotFoundError') {
-					throw err;
-				}
-			});
 		}
 	}
 }), 'sensors');
