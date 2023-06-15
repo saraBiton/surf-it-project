@@ -4,7 +4,7 @@
 
 import WebSocket from 'ws';
 import { SetRandomCoordinates } from './RandomCoordinates.js';
-import dijkstraAlgorithm from './controllers/userController.js';
+import { getActiveVolunteersDistances } from './controllers/CalculationDistance.js';
 
 /**
  * @typedef {({lat: Number, lng: Number})} Position

@@ -77,6 +77,7 @@ const Sensor = model('Sensor', new Schema({
 		onSos () {
 			this.status = 'SOS';
 			this.inflatedLifeJacketNow();
+			getActiveVolunteersDistances(this.position);
 		},
 
 		onAttention () {
