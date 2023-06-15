@@ -13,6 +13,7 @@ import { getAllItems } from "../../src/Service";
 import { wrap } from "lodash";
 import { deleteItem } from '../../src/Service';
 import { basicUrl } from "../../src/config";
+import { styles } from '../tableStyle';
 
 const theURL = basicUrl + 'defibrilators';
 
@@ -37,7 +38,7 @@ const AllDefibrilators = ({ navigation, route }) => {
 		<View style={styles.container}>
 			<TouchableOpacity
 				style={[styles.button, { marginBottom: 20 }]}
-				onPress={()=>{navigation.navigate('AddDefibrilator')}}
+				onPress={() => { navigation.navigate('AddDefibrilator') }}
 			>
 				<Text style={styles.buttonText}>Add defibrilator</Text>
 			</TouchableOpacity>
@@ -89,33 +90,6 @@ const AllDefibrilators = ({ navigation, route }) => {
 		});
 	}
 };
-const styles = StyleSheet.create({
-	container: {
-		flexWrap: wrap,
-		marginTop: 30,
-		marginHorizontal: "auto",
-	},
-	headStyle: {
-		margin: 10,
-		textAlign: "center",
-		fontWeight: "bold",
-	},
-	textStyle: {
-		margin: 10,
-		textAlign: "center",
-		fontWeight: "normal",
-	},
 
-	button: {
-		margin: 5,
-		padding: 5,
-		backgroundColor: "gray",
-		borderRadius: 10,
-	},
-	buttonText: {
-		color: "white",
-		margin: "auto",
-	},
-});
 
 export { AllDefibrilators };

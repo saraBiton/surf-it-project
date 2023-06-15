@@ -124,114 +124,84 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Table, Row, Rows } from "react-native-table-component";
+
 import { getAll } from "../../src/Service";
 import { wrap } from "lodash";
 import { deleteItem } from "../../src/Service";
 import { basicUrl } from "../../src/config";
+import { styles } from '../tableStyle';
 
 const usersURL = basicUrl + "users";
 
 const AllUsers = ({ navigation, route }) => {
-  const head = ["ID", "Full name", "City", "Role", "Sensor", "", ""];
-  const [tableData, setTableData] = useState({
-    keys: head,
-    values: [[], [], []],
-  });
+	const head = ["ID", "Full name", "City", "Role", "Sensor", "", ""];
+	const [tableData, setTableData] = useState({
+		keys: head,
+		values: [[], [], []],
+	});
 
-  useEffect(() => {
-    makeTable();
-  }, [route]);
+	useEffect(() => {
+		makeTable();
+	}, [route]);
 
-  const deleteUser = (id) => {
-    deleteItem(usersURL, id).then(() => setTableData(tableData));
-  };
+	const deleteUser = (id) => {
+		deleteItem(usersURL, id).then(() => setTableData(tableData));
+	};
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={[styles.button, { marginBottom: 10 }]}
-        onPress={() => navigation.navigate("AddUser")}
-      >
-        <Text style={styles.buttonText}>Add user</Text>
-      </TouchableOpacity>
-      <Table borderStyle={styles.tableBorder}>
-        <Row data={tableData.keys} textStyle={styles.headStyle} />
-        <Rows data={tableData.values} textStyle={styles.textStyle} />
-      </Table>
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<TouchableOpacity
+				style={[styles.button, { marginBottom: 10 }]}
+				onPress={() => navigation.navigate("AddUser")}
+			>
+				<Text style={styles.buttonText}>Add user</Text>
+			</TouchableOpacity>
+			<Table borderStyle={styles.tableBorder}>
+				<Row data={tableData.keys} textStyle={styles.headStyle} />
+				<Rows data={tableData.values} textStyle={styles.textStyle} />
+			</Table>
+		</View>
+	);
 
-  async function makeTable() {
-    function EditDeleteButtons({ user__id }) {
-      return (
-        <>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("EditUser", { user__id })}
-          >
-            <Text style={styles.buttonText}>edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => deleteUser(user__id)}
-          >
-            <Text style={styles.buttonText}>delete</Text>
-          </TouchableOpacity>
-        </>
-      );
-    }
+	async function makeTable() {
+		function EditDeleteButtons({ user__id }) {
+			return (
+				<>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => navigation.navigate("EditUser", { user__id })}
+					>
+						<Text style={styles.buttonText}>edit</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => deleteUser(user__id)}
+					>
+						<Text style={styles.buttonText}>delete</Text>
+					</TouchableOpacity>
+				</>
+			);
+		}
 
-    function ShowSensorsButtons() {
-      return (
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>show sensors</Text>
-        </TouchableOpacity>
-      );
-    }
+		function ShowSensorsButtons() {
+			return (
+				<TouchableOpacity style={styles.button}>
+					<Text style={styles.buttonText}>show sensors</Text>
+				</TouchableOpacity>
+			);
+		}
 
-    const r = await getAll().then((res) => res.data);
-    const keys = head;
-    const values = r.reduce((array, value) => {
-      const rowValues = Object.values(value);
-      rowValues.push(<EditDeleteButtons user__id={value._id} />);
-      rowValues.push(<ShowSensorsButtons />);
-      array.push(rowValues);
-      return array;
-    }, []);
-    setTableData({ keys, values });
-  }
+		const r = await getAll().then((res) => res.data);
+		const keys = head;
+		const values = r.reduce((array, value) => {
+			const rowValues = Object.values(value);
+			rowValues.push(<EditDeleteButtons user__id={value._id} />);
+			rowValues.push(<ShowSensorsButtons />);
+			array.push(rowValues);
+			return array;
+		}, []);
+		setTableData({ keys, values });
+	}
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 30,
-  },
-  headStyle: {
-    fontSize: 12,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  textStyle: {
-    fontSize: 10,
-    textAlign: "center",
-  },
-  button: {
-    marginVertical: 5,
-    padding: 8,
-    backgroundColor: "gray",
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 10,
-  },
-  tableBorder: {
-    borderWidth: 1,
-    borderColor: "gray",
-  },
-});
 
 export { AllUsers };
