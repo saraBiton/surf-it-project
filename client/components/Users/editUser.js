@@ -50,8 +50,6 @@ function EditUser({ navigation, route }) {
 		navigation.navigate('AllUsers', { user__id: user._id })
 	};
 
-	window.test1 = () => console.log(user);
-
 	return (
 		<ScrollView>
 			<View style={styles.container}>

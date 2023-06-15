@@ -3,8 +3,8 @@
  */
 
 import WebSocket from 'ws';
-import { setRandomCoordinates } from './RandomCoordinates.js';
-import { getActiveVolunteersDistances } from './controllers/CalculationDistance.js';
+import { SetRandomCoordinates } from './RandomCoordinates.js';
+import dijkstraAlgorithm from './controllers/userController.js';
 
 /**
  * @typedef {({lat: Number, lng: Number})} Position
@@ -90,11 +90,9 @@ class Sensor {
 						this.on_Attention();
 						break;
 					case 'SOS':
-
-					{
 						this.on_sos();
+						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
-					}
 				}
 
 				this.ws_client.send(JSON.stringify(this.toSend()));

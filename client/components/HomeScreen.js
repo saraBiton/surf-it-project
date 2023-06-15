@@ -70,7 +70,7 @@ function HomeScreen({ navigation }) {
               navigation.navigate("AllUsers");
             }}
           >
-            <Text style={styles.buttonText}>test</Text>
+            <Text style={styles.buttonText}>All users list</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
