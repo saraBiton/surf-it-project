@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.31",
     "@types/express-ws": "^3.0.1",
     "@wll8/express-ws": "^1.0.5",
     "axios": "^1.4.0",
