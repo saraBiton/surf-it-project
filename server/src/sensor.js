@@ -81,7 +81,7 @@ class Sensor {
 			console.log(`sensor ${this.id} connecting`);
 
 			while (this.isActive) {
-				this.position = SetRandomCoordinates(this.position);
+				this.position = setRandomCoordinates(this.position);
 
 				const random_status = SetRandomStatus();
 
@@ -91,7 +91,7 @@ class Sensor {
 						break;
 					case 'SOS':
 						this.on_sos();
-						getActiveVolunteersDistances(this.position);
+						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
 				}
 
