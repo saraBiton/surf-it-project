@@ -2,6 +2,15 @@
 // באמצעות שימוש ב-API של Google Maps
 // המרחקים מוחזרים בפורמט JSON.
 
+import axios from "axios";
+import { User } from "../Models/userModel.js";
+import { Defibrillator } from "../Models/defibrillatorModel.js";
+
+const a = getActiveVolunteersDistances({
+  lat: 31.790969999999998,
+  lng: 34.626059,
+});
+//1
 // async function getDistance(origin, destinations) {
 //   const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
 //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
@@ -29,40 +38,65 @@
 //       console.log(error);
 //     });
 // }
+//2
+// export async function getDistance(origin, destinations) {
+//   try {
+//     const apiKey = "your_api_key_here";
+//     const destinationsString = destinations
+//       .map((destination) => `${destination.lat},${destination.lng}`)
+//       .join("|");
+//     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=${destinationsString}&key=${apiKey}`;
 
-import axios from 'axios';
-import { User } from '../Models/userModel.js';
-import { Defibrillator } from '../Models/defibrillatorModel.js';
+//     console.log(url); // הדפסת הקישור לצורך בדיקה
 
-const a = getActiveVolunteersDistances({
-  lat: 31.790969999999998,
-  lng: 34.626059,
-});
-export async function getDistance(origin, destinations) {
+//     const response = await axios.get(url);
+//     const data = response.data;
+//     const rows = data.rows[0].elements;
+
+//     const distances = {};
+//     rows.forEach((element, index) => {
+//       const destination = destinations[index];
+//       const distance = element.distance.value;
+//       distances[`${destination.lat},${destination.lng}`] = distance;
+//     });
+
+//     return distances;
+//   } catch (error) {
+//     console.log(error); // הדפסת השגיאה לצורך בדיקה
+//     throw new Error("Failed to get distances from Google Maps API");
+//   }
+// }
+async function getDistance(point, destinations) {
   try {
-    const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
+    const apiKey = "YOUR_API_KEY_HERE";
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=`;
 
-		destinations.forEach((destination) => {
-			url += `${destination.lat},${destination.lng}|`;
-		});
+    destinations.forEach((destination) => {
+      url += `${destination.lat},${destination.lng}|`;
+    });
 
-		url += `&key=${apiKey}`;
-		const response = await axios.get(url);
-		const data = response.data;
-		const rows = data.rows[0].elements;
+    url += `&key=${apiKey}`;
+    const response = await axios.get(url);
+    const data = response.data;
+    const rows = data.rows[0].elements;
 
-		const distances = {};
-		rows.forEach((element, index) => {
-			const destination = destinations[index];
-			const distance = element.distance.value;
-			distances[`${destination.lat},${destination.lng}`] = distance;
-		});
+    const distances = {};
+    rows.forEach((element, index) => {
+      const destination = destinations[index];
+      if (element.distance) {
+        const distance = element.distance.value;
+        distances[`${destination.lat},${destination.lng}`] = distance;
+      } else {
+        console.error(
+          `Distance not found for destination ${destination.lat},${destination.lng}`
+        );
+      }
+    });
 
-		return distances;
-	} catch (error) {
-		throw new Error('Failed to get distances from Google Maps API');
-	}
+    return distances;
+  } catch (error) {
+    throw new Error("Failed to get distances from Google Maps API");
+  }
 }
 export async function getActiveVolunteersDistances(point) {
   const volunteers = await getActiveVolunteers();
@@ -103,7 +137,6 @@ async function getInactiveDefibrillators() {
 }
 // export async function getActiveVolunteersDistances(point){
 // 	const volunteers = await User.find({ role: 'volunteer' }).maxTimeMS(600000);// זמן מקסימלי של דקה (60,000 מילישניות)
-
 
 //   const activeVolunteers = volunteers
 //     .filter((v) => v.volunteer.isActive === true)

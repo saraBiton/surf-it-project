@@ -3,7 +3,7 @@ import { Router } from 'express';
 import userController from '../controllers/userController.js';
 const login_router = Router();
 
-login_router.route('/').post(async (req, res) => {
+login_router.route('/new').post(async (req, res) => {
 	console.log('body', req.body);
 	const { firstName, lastName, password } = req.body;
 	const result = await userController.checkLogin(firstName, lastName, password);

@@ -3,8 +3,7 @@
  */
 
 import WebSocket from 'ws';
-import { SetRandomCoordinates } from './RandomCoordinates.js';
-import { getActiveVolunteersDistances } from './controllers/CalculationDistance.js';
+import { setRandomCoordinates } from './RandomCoordinates.js';
 
 /**
  * @typedef {({lat: Number, lng: Number})} Position
@@ -91,7 +90,6 @@ class Sensor {
 						break;
 					case 'SOS':
 						this.on_sos();
-						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
 				}
 
