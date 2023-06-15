@@ -34,9 +34,13 @@ import axios from "axios";
 import { User } from "../Models/userModel.js";
 import { Defibrillator } from "../Models/defibrillatorModel.js";
 
-async function getDistance(origin, destinations) {
+const a = getActiveVolunteersDistances({
+  lat: 31.790969999999998,
+  lng: 34.626059,
+});
+export async function getDistance(origin, destinations) {
   try {
-    const apiKey = "YOUR_API_KEY";
+    const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
 
     destinations.forEach((destination) => {
@@ -60,68 +64,77 @@ async function getDistance(origin, destinations) {
     throw new Error("Failed to get distances from Google Maps API");
   }
 }
+export async function getActiveVolunteersDistances(point) {
+  const volunteers = await getActiveVolunteers();
+  const defibrillators = await getInactiveDefibrillators();
 
-const getActiveVolunteersDistances = async (point) => {
-	const volunteers = await User.find({ role: 'volunteer' });
+  const activeVolunteers = volunteers.map((v) => {
+    return { lng: v.volunteer.lng, lat: v.volunteer.lat, id: v.id };
+  });
 
-  const activeVolunteers = volunteers
-    .filter((v) => v.volunteer.isActive === true)
-    .map((v) => {
-      return { lng: v.volunteer.lng, lat: v.volunteer.lat, id };
-    });
+  const defibrillatorsfree = defibrillators.map((d) => {
+    return { lng: d.position.lng, lat: d.position.lat, id: d.id };
+  });
+
+  const [distancesVolunteers, distancesDefibrillators] = await Promise.all([
+    getDistance(point, activeVolunteers),
+    getDistance(point, defibrillatorsfree),
+  ]);
+
   console.log(activeVolunteers);
+  console.log(distancesVolunteers);
+  console.log(defibrillatorsfree);
+  console.log(distancesDefibrillators);
+}
 
-  const distancesVolunteers = await getDistance(point, activeVolunteers);
+async function getActiveVolunteers() {
+  const volunteers = await User.find({
+    role: "volunteer",
+    "volunteer.isActive": true,
+  }).maxTimeMS(600000);
+  return volunteers;
+}
 
-
-	console.log(distances);
-
-
-  const defibrillators = await Defibrillator.find();
-
-  const defibrillatorsfree = defibrillators
-    .filter((v) => d.Defibrillator.isActive === false)
-    .map((v) => {
-      return { lng: d.Defibrillator.lng, lat: d.Defibrillator.lat, id:d.Defibrillator.id };
-    });
-  console.log(activeVolunteers);
-
-  const distancesDefibrillators = await getDistance(point, defibrillatorsfree);
-
-  console.log(distances);
-
-
-	const result = dijkstra(
-		graph,
-		point,
-		distances[0].destination,
-		'defibrillator2'
-	);
-
-
-	console.log(result.path);
-	console.log(result.distance);
-};
-export default getActiveVolunteersDistances;
-
-// getActiveVolunteersDistances
-// const dijkstra = async (point) => {
-//   const volunteers = await User.find({ role: "volunteer" });
+async function getInactiveDefibrillators() {
+  const defibrillators = await Defibrillator.find({
+    isActive: false,
+  }).maxTimeMS(600000);
+  return defibrillators;
+}
+// export async function getActiveVolunteersDistances(point){
+// 	const volunteers = await User.find({ role: 'volunteer' }).maxTimeMS(600000);// זמן מקסימלי של דקה (60,000 מילישניות)
 
 //   const activeVolunteers = volunteers
 //     .filter((v) => v.volunteer.isActive === true)
 //     .map((v) => {
-//       return { lng: v.volunteer.lng, lat: v.volunteer.lat };
+//       return { lng: v.volunteer.lng, lat: v.volunteer.lat, id: v.id };
 //     });
-
 //   console.log(activeVolunteers);
 
-//   getDistance(point, activeVolunteers)
-//     .then((distances) => {
-//       console.log(distances);
-//       // כאן תוכל להשתמש במערך המרחקים כדי להכניס אותם לגרף ולהפעיל עליו את אלגוריתם דייקסטרה
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error.message);
+//   const distancesVolunteers = await getDistance(point, activeVolunteers);
+
+// 	console.log(distancesVolunteers);
+
+//   const defibrillators = await Defibrillator.find().maxTimeMS(600000);;
+
+//   const defibrillatorsfree = defibrillators
+//     .filter((d) => d.isActive === false)
+//     .map((d) => {
+//       return { lng: d.position.lng, lat: d.position.lat, id:d.id };
 //     });
+//   console.log(defibrillatorsfree);
+
+//   const distancesDefibrillators = await getDistance(point, defibrillatorsfree);
+
+//   console.log(distancesDefibrillators);
+
+// 	// const result = dijkstra(
+// 	// 	graph,
+// 	// 	point,
+// 	// 	distances[0].destination,
+// 	// 	'defibrillator2'
+// 	// );
+
+// 	// console.log(result.path);
+// 	// console.log(result.distance);
 // };

@@ -3,8 +3,8 @@
  */
 
 import WebSocket from 'ws';
-import { SetRandomCoordinates } from './RandomCoordinates.js';
-import dijkstraAlgorithm from './controllers/userController.js';
+import { setRandomCoordinates } from './RandomCoordinates.js';
+import { getActiveVolunteersDistances } from './controllers/CalculationDistance.js';
 
 /**
  * @typedef {({lat: Number, lng: Number})} Position
@@ -81,7 +81,7 @@ class Sensor {
 			console.log(`sensor ${this.id} connecting`);
 
 			while (this.isActive) {
-				this.position = SetRandomCoordinates(this.position);
+				this.position = setRandomCoordinates(this.position);
 
 				const random_status = SetRandomStatus();
 
@@ -93,7 +93,6 @@ class Sensor {
 
 					{
 						this.on_sos();
-						dijkstraAlgorithm.getActiveVolunteersDistances(this.position);
 						break;
 					}
 				}
