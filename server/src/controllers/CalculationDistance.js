@@ -60,16 +60,14 @@ const a = getActiveVolunteersDistances({
 //       distances[`${destination.lat},${destination.lng}`] = distance;
 //     });
 
-//     return distances;
-//   } catch (error) {
-//     console.log(error); // הדפסת השגיאה לצורך בדיקה
-//     throw new Error("Failed to get distances from Google Maps API");
-//   }
-// }
-async function getDistance(point, destinations) {
+const a = getActiveVolunteersDistances({
+  lat: 31.790969999999998,
+  lng: 34.626059,
+});
+export async function getDistance(origin, destinations) {
   try {
-    const apiKey = "YOUR_API_KEY_HERE";
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${point.lat},${point.lng}&destinations=`;
+    const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
 
     destinations.forEach((destination) => {
       url += `${destination.lat},${destination.lng}|`;
@@ -99,41 +97,41 @@ async function getDistance(point, destinations) {
   }
 }
 export async function getActiveVolunteersDistances(point) {
-  const volunteers = await getActiveVolunteers();
-  const defibrillators = await getInactiveDefibrillators();
+	const volunteers = await getActiveVolunteers();
+	const defibrillators = await getInactiveDefibrillators();
 
-  const activeVolunteers = volunteers.map((v) => {
-    return { lng: v.volunteer.lng, lat: v.volunteer.lat, id: v.id };
-  });
+	const activeVolunteers = volunteers.map((v) => {
+		return { lng: v.volunteer.lng, lat: v.volunteer.lat, id: v.id };
+	});
 
-  const defibrillatorsfree = defibrillators.map((d) => {
-    return { lng: d.position.lng, lat: d.position.lat, id: d.id };
-  });
+	const defibrillatorsfree = defibrillators.map((d) => {
+		return { lng: d.position.lng, lat: d.position.lat, id: d.id };
+	});
 
-  const [distancesVolunteers, distancesDefibrillators] = await Promise.all([
-    getDistance(point, activeVolunteers),
-    getDistance(point, defibrillatorsfree),
-  ]);
+	const [distancesVolunteers, distancesDefibrillators] = await Promise.all([
+		getDistance(point, activeVolunteers),
+		getDistance(point, defibrillatorsfree)
+	]);
 
-  console.log(activeVolunteers);
-  console.log(distancesVolunteers);
-  console.log(defibrillatorsfree);
-  console.log(distancesDefibrillators);
+	console.log(activeVolunteers);
+	console.log(distancesVolunteers);
+	console.log(defibrillatorsfree);
+	console.log(distancesDefibrillators);
 }
 
 async function getActiveVolunteers() {
-  const volunteers = await User.find({
-    role: "volunteer",
-    "volunteer.isActive": true,
-  }).maxTimeMS(600000);
-  return volunteers;
+	const volunteers = await User.find({
+		role: 'volunteer',
+		'volunteer.isActive': true
+	}).maxTimeMS(600000);
+	return volunteers;
 }
 
 async function getInactiveDefibrillators() {
-  const defibrillators = await Defibrillator.find({
-    isActive: false,
-  }).maxTimeMS(600000);
-  return defibrillators;
+	const defibrillators = await Defibrillator.find({
+		isActive: false
+	}).maxTimeMS(600000);
+	return defibrillators;
 }
 // export async function getActiveVolunteersDistances(point){
 // 	const volunteers = await User.find({ role: 'volunteer' }).maxTimeMS(600000);// זמן מקסימלי של דקה (60,000 מילישניות)
