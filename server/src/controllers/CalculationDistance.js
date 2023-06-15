@@ -6,10 +6,7 @@ import axios from "axios";
 import { User } from "../Models/userModel.js";
 import { Defibrillator } from "../Models/defibrillatorModel.js";
 
-const a = getActiveVolunteersDistances({
-  lat: 31.790969999999998,
-  lng: 34.626059,
-});
+
 //1
 // async function getDistance(origin, destinations) {
 //   const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
