@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 import { setRandomCoordinates, setRandomStatus, sleep } from '../RandomCoordinates.js';
-// import { getActiveVolunteersDistances } from '../controllers/CalculationDistance.js';
+import { getActiveVolunteersDistances } from '../controllers/CalculationDistance.js';
 
 const Sensor = model('Sensor', new Schema({
 	// sensorID: {type: String, required: true},
@@ -77,13 +77,9 @@ const Sensor = model('Sensor', new Schema({
 		onSos () {
 			this.status = 'SOS';
 			this.inflatedLifeJacketNow();
-<<<<<<< HEAD
 			getActiveVolunteersDistances(this.position).catch(
 				error => console.error(error)
 			);
-=======
-			// getActiveVolunteersDistances(this.position);
->>>>>>> 15a8ad7ab30569f453ae2fb955220cc7fcc89f29
 		},
 
 		onAttention () {

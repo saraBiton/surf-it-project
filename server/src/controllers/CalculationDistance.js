@@ -2,12 +2,11 @@
 // באמצעות שימוש ב-API של Google Maps
 // המרחקים מוחזרים בפורמט JSON.
 
-import axios from "axios";
-import { User } from "../Models/userModel.js";
-import { Defibrillator } from "../Models/defibrillatorModel.js";
+import axios from 'axios';
+import { User } from '../Models/userModel.js';
+import { Defibrillator } from '../Models/defibrillatorModel.js';
 
-
-//1
+// 1
 // async function getDistance(origin, destinations) {
 //   const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
 //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
@@ -35,7 +34,7 @@ import { Defibrillator } from "../Models/defibrillatorModel.js";
 //       console.log(error);
 //     });
 // }
-//2
+// 2
 // export async function getDistance(origin, destinations) {
 //   try {
 //     const apiKey = "your_api_key_here";
@@ -44,18 +43,8 @@ import { Defibrillator } from "../Models/defibrillatorModel.js";
 //       .join("|");
 //     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=${destinationsString}&key=${apiKey}`;
 
-import axios from 'axios';
-import { User } from '../Models/userModel.js';
-import { Defibrillator } from '../Models/defibrillatorModel.js';
-
-const client = new Client({});
-
 const apiKey = 'AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ';
 
-const a = getActiveVolunteersDistances({
-  lat: 31.790969999999998,
-  lng: 34.626059,
-});
 export async function getDistance (origin, destinations) {
 	try {
 		if (
@@ -83,14 +72,14 @@ export async function getDistance (origin, destinations) {
 		const distances = {};
 		rows.forEach((element, index) => {
 			if (element.distance) {
-			const destination = destinations[index];
-			const distance = element?.distance.value;
-			distances[`${destination.lat},${destination.lng}`] = distance;
-		} else {
-			console.error(
-			  `Distance not found for destination ${destination.lat},${destination.lng}`
-			);
-		  }
+				const destination = destinations[index];
+				const distance = element?.distance.value;
+				distances[`${destination.lat},${destination.lng}`] = distance;
+			} else {
+				console.error(
+					`Distance not found for destination ${destination.lat},${destination.lng}`
+				);
+			}
 		});
 
 		return distances;
