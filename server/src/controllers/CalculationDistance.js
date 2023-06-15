@@ -1,6 +1,6 @@
-//מקבלת מקור ויעדים ומחזירה את המרחק בין המקור לכל יעד
-//באמצעות שימוש ב-API של Google Maps
-//המרחקים מוחזרים בפורמט JSON.
+// מקבלת מקור ויעדים ומחזירה את המרחק בין המקור לכל יעד
+// באמצעות שימוש ב-API של Google Maps
+// המרחקים מוחזרים בפורמט JSON.
 
 // async function getDistance(origin, destinations) {
 //   const apiKey = "AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ";
@@ -30,66 +30,63 @@
 //     });
 // }
 
-import axios from "axios";
-import { User } from "../Models/userModel.js";
-import { Defibrillator } from "../Models/defibrillatorModel.js";
+import axios from 'axios';
+import { User } from '../Models/userModel.js';
+import { Defibrillator } from '../Models/defibrillatorModel.js';
 
-async function getDistance(origin, destinations) {
-  try {
-    const apiKey = "YOUR_API_KEY";
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
+async function getDistance (origin, destinations) {
+	try {
+		const apiKey = 'YOUR_API_KEY';
+		const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.lat},${origin.lng}&destinations=`;
 
-    destinations.forEach((destination) => {
-      url += `${destination.lat},${destination.lng}|`;
-    });
+		destinations.forEach((destination) => {
+			url += `${destination.lat},${destination.lng}|`;
+		});
 
-    url += `&key=${apiKey}`;
-    const response = await axios.get(url);
-    const data = response.data;
-    const rows = data.rows[0].elements;
+		url += `&key=${apiKey}`;
+		const response = await axios.get(url);
+		const data = response.data;
+		const rows = data.rows[0].elements;
 
-    const distances = {};
-    rows.forEach((element, index) => {
-      const destination = destinations[index];
-      const distance = element.distance.value;
-      distances[`${destination.lat},${destination.lng}`] = distance;
-    });
+		const distances = {};
+		rows.forEach((element, index) => {
+			const destination = destinations[index];
+			const distance = element.distance.value;
+			distances[`${destination.lat},${destination.lng}`] = distance;
+		});
 
-    return distances;
-  } catch (error) {
-    throw new Error("Failed to get distances from Google Maps API");
-  }
+		return distances;
+	} catch (error) {
+		throw new Error('Failed to get distances from Google Maps API');
+	}
 }
 
 const getActiveVolunteersDistances = async (point) => {
 	const volunteers = await User.find({ role: 'volunteer' });
 
-  const activeVolunteers = volunteers
-    .filter((v) => v.volunteer.isActive === true)
-    .map((v) => {
-      return { lng: v.volunteer.lng, lat: v.volunteer.lat, id };
-    });
-  console.log(activeVolunteers);
+	const activeVolunteers = volunteers
+		.filter((v) => v.volunteer.isActive === true)
+		.map((v) => {
+			return { lng: v.volunteer.lng, lat: v.volunteer.lat, id };
+		});
+	console.log(activeVolunteers);
 
-  const distancesVolunteers = await getDistance(point, activeVolunteers);
-
+	const distancesVolunteers = await getDistance(point, activeVolunteers);
 
 	console.log(distances);
 
+	const defibrillators = await Defibrillator.find();
 
-  const defibrillators = await Defibrillator.find();
+	const defibrillatorsfree = defibrillators
+		.filter((v) => d.Defibrillator.isActive === false)
+		.map((v) => {
+			return { lng: d.Defibrillator.lng, lat: d.Defibrillator.lat, id: d.Defibrillator.id };
+		});
+	console.log(activeVolunteers);
 
-  const defibrillatorsfree = defibrillators
-    .filter((v) => d.Defibrillator.isActive === false)
-    .map((v) => {
-      return { lng: d.Defibrillator.lng, lat: d.Defibrillator.lat, id:d.Defibrillator.id };
-    });
-  console.log(activeVolunteers);
+	const distancesDefibrillators = await getDistance(point, defibrillatorsfree);
 
-  const distancesDefibrillators = await getDistance(point, defibrillatorsfree);
-
-  console.log(distances);
-
+	console.log(distances);
 
 	const result = dijkstra(
 		graph,
@@ -98,11 +95,10 @@ const getActiveVolunteersDistances = async (point) => {
 		'defibrillator2'
 	);
 
-
 	console.log(result.path);
 	console.log(result.distance);
 };
-export default getActiveVolunteersDistances;
+export { getActiveVolunteersDistances };
 
 // getActiveVolunteersDistances
 // const dijkstra = async (point) => {

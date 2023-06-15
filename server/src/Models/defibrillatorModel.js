@@ -25,7 +25,7 @@ const DefibrillatorSchema = new Schema({
 	position: { lat: Number, lng: Number }
 }, {
 	methods: {
-		dataToShow() {
+		dataToShow () {
 			// מידע להצגה ברשימת כל הדפיברילטורים
 			return {
 				id: this.id,

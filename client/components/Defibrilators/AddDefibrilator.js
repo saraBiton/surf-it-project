@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     TextInput,
@@ -7,9 +7,13 @@ import {
     Button,
     ScrollView,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { Alert } from "@mui/material";
+
 import { basicUrl } from "../../src/config";
 const { addItem } = require("../../src/Service");
-import { Picker } from "@react-native-picker/picker";
+import { getAllItems } from "../../src/Service";
+
 
 const theURL = basicUrl + 'defibrilators';
 
@@ -22,14 +26,37 @@ const AddDefibrilator = () => {
         position: {}
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const [usersList, setUsersList] = useState([{}])
+
     const submitHandle = async () => {
-        await addItem(theURL, defibrilator)
-        navigation.navigate('AllDefibrilators', {})
+         addItem(theURL, defibrilator).then((r)=>{
+            r.data.
+            navigation.navigate('AllDefibrilators', {})
+         }).catch((error)=>{
+            setErrorMessage(error)
+         })
+
     };
+
+    window.setErrorMessage = setErrorMessage;
+
+    useEffect(() => {
+        getAllItems(basicUrl + 'users')
+            .then(res => res.data)
+            .then(users => setUsersList(users));
+    }, [])
 
     return (
         <ScrollView>
             <View style={styles.container}>
+                {
+                    errorMessage ? (
+
+                        <Alert severity="error">{errorMessage}</Alert>
+
+                    ) : null}
                 <Text style={styles.subtitle}>Add defibrilator</Text>
 
                 <View style={styles.inputContainer}>
@@ -48,9 +75,50 @@ const AddDefibrilator = () => {
                         selectedValue={defibrilator.isActive}
                         onValueChange={(v) => setDefibrilator({ ...defibrilator, isActive: v })}
                     >
-                        <Picker.Item label="Select item" value='' />
+                        <Picker.Item label="Is active" value='' />
                         <Picker.Item label="True" value='true' />
                         <Picker.Item label="False" value='false' />
+                    </Picker>
+                </View>
+
+                <Text style={styles.subtitle}>Position</Text>
+
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Lat"
+                        onChangeText={(text) => setDefibrilator({
+                            ...defibrilator,
+                            position: { ...defibrilator.position, lat: text }
+                        })}
+                        value={defibrilator.position.lat}
+                        maxLength={9}
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Lng"
+                        onChangeText={(text) => setDefibrilator({
+                            ...defibrilator,
+                            position: { ...defibrilator.position, lng: text }
+                        })}
+                        value={defibrilator.position.lng}
+                        maxLength={9}
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Picker
+                        style={styles.input}
+                        selectedValue={defibrilator.userId}
+                        onValueChange={(v) => setDefibrilator({ ...defibrilator, userId: v })}
+                    >
+                        <Picker.Item label="User" />
+                        {usersList.map(user =>
+                            <Picker.Item label={user.fullName} value={user._id} />
+                        )}
                     </Picker>
                 </View>
 
