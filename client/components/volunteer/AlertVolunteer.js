@@ -13,10 +13,13 @@ function AlertVolunteer() {
   return (
     <View>
       <Alert severity="error">SOS!!🆘</Alert>
+      {/* <Alert severity="OK">OK!!🆗</Alert> */}
       {/* <Image src={mapp} alt="mapp" />; */}
 
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>End of event📳</Text>
+      <Text style={styles.buttonText}>I got📳</Text>
+
+        {/* <Text style={styles.buttonText}>End of event📳</Text> */}
       </TouchableOpacity>
     </View>
   );
