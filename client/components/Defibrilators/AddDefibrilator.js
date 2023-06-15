@@ -13,6 +13,7 @@ import { Alert } from "@mui/material";
 import { basicUrl } from "../../src/config";
 const { addItem } = require("../../src/Service");
 import { getAllItems } from "../../src/Service";
+import { json } from "react-router-dom";
 
 
 const theURL = basicUrl + 'defibrilators';
@@ -22,7 +23,7 @@ const AddDefibrilator = () => {
     const [defibrilator, setDefibrilator] = useState({
         id: undefined,
         isActive: undefined,
-        userId: {},
+        userId: '',
         position: {}
     });
 
@@ -31,12 +32,12 @@ const AddDefibrilator = () => {
     const [usersList, setUsersList] = useState([{}])
 
     const submitHandle = async () => {
-         addItem(theURL, defibrilator).then((r)=>{
+        addItem(theURL, defibrilator).then((r) => {
             r.data.
-            navigation.navigate('AllDefibrilators', {})
-         }).catch((error)=>{
-            setErrorMessage(error)
-         })
+                navigation.navigate('AllDefibrilators', {})
+        }).catch((error) => {
+            setErrorMessage(error.response.data.message);
+        })
 
     };
 
