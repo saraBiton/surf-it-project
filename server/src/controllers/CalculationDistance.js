@@ -5,58 +5,53 @@
 import axios from 'axios';
 import { User } from '../Models/userModel.js';
 import { Defibrillator } from '../Models/defibrillatorModel.js';
-
-const apiKey = 'AIzaSyBs28fQD8-yiY6leR2cAXSv9CGl5Sm4eVQ';
+import { apiKey } from '../Config/db.js';
 
 // isDestination = true ,(מערך מקורות, יעד)
 // isDestination = false ,(מערך יעדים, מערך מקורות)
 export async function getDistance (
-	targetOrSources,
-	sourcesOrTargets,
+	destinations,
+	origins,
 	isDestination = true
 ) {
 	try {
 		if (
-			!targetOrSources ||
-      !targetOrSources[0]?.lat ||
-      !sourcesOrTargets ||
-      !sourcesOrTargets[0]?.lat
+			!origins || !destinations ||
+			(
+				!origins?.lat &&
+				!origins[0]?.lat
+			) || (
+				!destinations?.lat &&
+				!destinations[0]?.lat
+			)
 		) {
 			return false;
 		}
 
-		let origins, destinations;
-		if (isDestination) {
-			origins = sourcesOrTargets
-				.map((source) => `${source.lat},${source.lng}`)
-				.join('|');
-			destinations = `${targetOrSources.lat},${targetOrSources.lng}`;
-		} else {
-			origins = `${targetOrSources.lat},${targetOrSources.lng}`;
-			destinations = sourcesOrTargets
-				.map((target) => `${target.lat},${target.lng}`)
-				.join('|');
+		if (!Array.isArray(destinations)) {
+			destinations = [destinations];
 		}
-		console.log('origins:', origins);
-		console.log('destinations:', destinations);
-		const response = await axios.get(
-			'https://maps.googleapis.com/maps/api/distancematrix/json',
-			{
-				params: {
-					key: apiKey,
-					origins,
-					destinations
-				}
-			}
-		);
 
-		const data = response.data;
-		const elements = isDestination ? data.rows[0]?.elements : data.rows;
+		const data = await googleGetDistance(destinations, origins);
+		// const elements = isDestination ? data.rows[0]?.elements : data.rows;
+
+		const sortOriginsElements = processingData(data);
+
+		console.log(sortOriginsElements);
 
 		const distances = {};
-		elements.forEach((element, index) => {
-			if (element.distance) {
-				const coord = isDestination ? sourcesOrTargets[index] : targetOrSources;
+		const distances1 = {}; // for exemple
+		sortOriginsElements.forEach((element, index) => {
+			const origin = element.src;
+
+			if (element.elements[0].status === 'OK') {
+				distances[`${origin.lat},${origin.lng}`] = element.elements[0].distance.value;
+
+				distances1[element.src._id] = element.elements[0].distance.value;
+			}
+
+			/* if (element.distance) {
+				const coord = isDestination ? destinations[index] : origins;
 				const distance = element?.distance.value;
 				distances[`${coord.lat},${coord.lng}`] = distance;
 			} else {
@@ -64,34 +59,92 @@ export async function getDistance (
 					`Distance not found for ${isDestination ? 'source' : 'target'
 					} ${index}`
 				);
-			}
+			} */
 		});
 		return distances;
 	} catch (error) {
 		error.message += '\r\n' + 'Failed to get distances from Google Maps API';
 		throw error;
 	}
+
+	function processingData (data) {
+		const origin_addresses = data.origin_addresses;
+		const rows = data.rows;
+
+		const originsElements = rows.map((origin, i) => {
+			origin.src = origins[i];
+			origin.address = origin_addresses[i];
+
+			origin.elements = origin.elements.map((destination, j) => {
+				destination.src = destinations[j];
+				return destination;
+			});
+
+			origin.elements = origin.elements.sort(
+				(a, b) =>
+					a?.distance?.value -
+					b?.distance?.value
+			);
+
+			return origin;
+		});
+
+		const sortOriginsElements = originsElements.sort(
+			(a, b) =>
+				a.elements[0]?.distance?.value -
+				b.elements[0]?.distance?.value
+		);
+
+		return sortOriginsElements;
+	}
+
+	async function googleGetDistance (destinations, origins) {
+		destinations = arrayToPipeString(destinations);
+		origins = arrayToPipeString(origins);
+
+		const response = await axios.get(
+			'https://maps.googleapis.com/maps/api/distancematrix/json',
+			{
+				params: {
+					key: apiKey,
+					destinations,
+					origins
+				}
+			}
+		);
+
+		return response.data;
+	};
 }
 
 export async function getActiveVolunteersDistances (
-	point = { lat: 31.792, lng: 34.627 }
+	sensorPosition = { lat: 31.792, lng: 34.627 }
 ) {
-	console.log('point:', point);
+	console.log('point:', sensorPosition);
 	const volunteers = await getActiveVolunteers();
 	const defibrillators = await getInactiveDefibrillators();
 
-	const activeVolunteers = volunteers.map((v) => {
-		return { lng: v.volunteer.lng, lat: v.volunteer.lat, id: v.id };
-	});
+	const getRelevantInformation = (obj, position) =>
+		({ lng: position.lng, lat: position.lat, id: obj.id, _id: obj._id });
 
-	const defibrillatorsfree = defibrillators.map((d) => {
-		return { lng: d.position.lng, lat: d.position.lat, id: d.id };
-	});
+	const activeVolunteers =
+		volunteers.map((user) => getRelevantInformation(user, user.volunteer));
 
-	const [distancesVolunteers, distancesDefibrillators] = await Promise.all([
-		getDistance(point, defibrillatorsfree),
-		getDistance(activeVolunteers, defibrillatorsfree, false)
-	]).catch((error) => console.error(error));
+	const defibrillatorsfree =
+		defibrillators.map((defibrilator) =>
+			getRelevantInformation(defibrilator, defibrilator.position));
+
+	const promiseArray = [];
+	promiseArray.push(
+		getDistance(sensorPosition, defibrillatorsfree)
+	);
+
+	promiseArray.push(
+		getDistance(defibrillatorsfree, activeVolunteers, false)
+	);
+
+	const [distancesVolunteers, distancesDefibrillators] = await Promise.all(promiseArray)
+		.catch((error) => console.error(error));
 
 	console.log('activeVolunteers:', activeVolunteers);
 	console.log('distancesVolunteers:', distancesVolunteers);
@@ -102,7 +155,9 @@ export async function getActiveVolunteersDistances (
 async function getActiveVolunteers () {
 	const volunteers = await User.find({
 		role: 'volunteer',
-		'volunteer.isActive': true
+		'volunteer.isActive': true,
+		'volunteer.lat': { $ne: null },
+		'volunteer.lng': { $ne: null }
 	}).maxTimeMS(600000);
 	console.log(`Found ${volunteers.length} active volunteers`);
 	console.log(volunteers);
@@ -117,6 +172,17 @@ async function getInactiveDefibrillators () {
 	console.log(defibrillators);
 	return defibrillators;
 }
+
+const arrayToPipeString = (param) => {
+	if (Array.isArray(param)) {
+		return param.map((target) => `${target.lat},${target.lng}`)
+			.join('|');
+	} else if (typeof param === 'object') {
+		return `${param.lat},${param.lng}`;
+	} else {
+		throw new Error('param is not validate!');
+	}
+};
 
 // export async function getDistance(origin, destinations) {
 //   try {
