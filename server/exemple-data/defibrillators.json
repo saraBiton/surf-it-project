@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "648502e971326325c0f355df"
+  },
+  "isActive": false,
+  "position": {
+    "lat": 13.6678,
+    "lng": 14.2593
+  },
+  "id": "1"
+},{
+  "_id": {
+    "$oid": "64850307afe366e72a72f85d"
+  },
+  "isActive": false,
+  "position": {
+    "lat": 15.6678,
+    "lng": 16.2593
+  },
+  "id": "2"
+},{
+  "_id": {
+    "$oid": "648503feafe366e72a72f9c0"
+  },
+  "isActive": false,
+  "position": {
+    "lat": 17.6678,
+    "lng": 16.2593
+  },
+  "id": "3"
+},{
+  "_id": {
+    "$oid": "6488378df7b6ffab6cbe7b0a"
+  },
+  "isActive": false,
+  "position": {
+    "lat": 17.6678,
+    "lng": 16.2593
+  },
+  "id": "4"
+},{
+  "_id": {
+    "$oid": "648837def7b6ffab6cbe7b7f"
+  },
+  "isActive": true,
+  "userId": {
+    "$oid": "646e9e2b0288b7edda1d10a4"
+  },
+  "position": {
+    "lat": 17.6678,
+    "lng": 16.2593
+  }
+},{
+  "_id": {
+    "$oid": "6488385df7b6ffab6cbe7c35"
+  },
+  "isActive": true,
+  "userId": {
+    "$oid": "646e9e2b0288b7edda1d10a4"
+  },
+  "position": {
+    "lat": 17.6678,
+    "lng": 16.2593
+  }
+}]

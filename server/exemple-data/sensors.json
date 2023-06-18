@@ -1,0 +1,84 @@
+[{
+  "_id": {
+    "$oid": "64770d3f4e2f662db8f2159f"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.792528999999952,
+    "lng": 34.627894000000516
+  },
+  "status": "OK",
+  "inflatedLifeJacket": true,
+  "isSimulateMoves": "true",
+  "userId": "646c8a9abeca91d0effe6006"
+},{
+  "_id": {
+    "$oid": "64770d3f4e2f662db8f2159d"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.789910000000038,
+    "lng": 34.62397899999934
+  },
+  "status": "OK",
+  "inflatedLifeJacket": true,
+  "userId": "648066ce803a6b0f9083d7e5",
+  "isSimulateMoves": "true"
+},{
+  "_id": {
+    "$oid": "647c525e24bed423e341f022"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.787360000000135,
+    "lng": 34.62360899999922
+  },
+  "status": "OK",
+  "inflatedLifeJacket": true,
+  "isSimulateMoves": "true",
+  "userId": "6485d13b71ec1f1dc3d42f1e"
+},{
+  "_id": {
+    "$oid": "648a7adee3d2f34735dfb3ed"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.791368999999996,
+    "lng": 34.62617399999997
+  },
+  "status": "OK",
+  "inflatedLifeJacket": false
+},{
+  "_id": {
+    "$oid": "648a7adee3d2f34735dfb3ef"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.79092,
+    "lng": 34.62596899999997
+  },
+  "status": "SOS",
+  "inflatedLifeJacket": true
+},{
+  "_id": {
+    "$oid": "648a7c1e0f9e0fa9ed86ed10"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.791249,
+    "lng": 34.62629400000001
+  },
+  "status": "Attention",
+  "inflatedLifeJacket": false
+},{
+  "_id": {
+    "$oid": "648a7c1e0f9e0fa9ed86ed12"
+  },
+  "isActive": true,
+  "position": {
+    "lat": 31.790969999999998,
+    "lng": 34.626048999999995
+  },
+  "status": "Attention",
+  "inflatedLifeJacket": false
+}]
