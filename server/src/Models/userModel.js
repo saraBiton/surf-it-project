@@ -27,7 +27,7 @@ const userSchema = new Schema({
 	versionKey: false
 });
 
-userSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
+userSchema.index({ id: 1 }, { unique: true });
 
 const User = model('User', userSchema);
 
