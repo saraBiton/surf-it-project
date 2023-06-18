@@ -33,30 +33,76 @@ export async function getDistance (
 			return false;
 		}
 
-    let origins, destinations;
-    if (isDestination) {
-      origins = sourcesOrTargets
-        .map((source) => `${source.lat},${source.lng}`)
-        .join("|");
-      destinations = `${targetOrSources.lat},${targetOrSources.lng}`;
-    } else {
-      origins = `${targetOrSources.lat},${targetOrSources.lng}`;
-      destinations = sourcesOrTargets
-        .map((target) => `${target.lat},${target.lng}`)
-        .join("|");
-    }
-console.log("origins:",origins);
-console.log("destinations:",destinations);
-    const response = await axios.get(
-      "https://maps.googleapis.com/maps/api/distancematrix/json",
-      {
-        params: {
-          key: apiKey,
-          origins: origins,
-          destinations: destinations,
-        },
-      }
-    );
+		if (!Array.isArray(destinations)) {
+			destinations = [destinations];
+		}
+
+		// בקשת נתונים מגוגל מפות
+		const data = await googleGetDistance(destinations, origins);
+		// const elements = isDestination ? data.rows[0]?.elements : data.rows;
+
+		// עיבוד נתונים
+		const sortOriginsElements = processingData(data);
+
+		console.log(sortOriginsElements);
+
+		return sortOriginsElements;
+	} catch (error) {
+		error.message += '\r\n' + 'Failed to get distances from Google Maps API';
+		throw error;
+	}
+
+	function processingData (data) {
+		// רשימת כתובות מקור
+		const origin_addresses = data.origin_addresses;
+
+		// כל השורות של elements
+		const rows = data.rows;
+
+		// הוספת שורות המקור לרשימת מקורות ויעדים
+		const originsElements = rows.map((origin, i) => {
+			origin.src = origins[i];
+			origin.address = origin_addresses[i];
+
+			origin.elements = origin.elements.map((destination, j) => {
+				destination.src = destinations[j];
+				return destination;
+			});
+
+			// מיון יעדים
+			origin.elements = origin.elements.sort(
+				(a, b) =>
+					a?.distance?.value -
+					b?.distance?.value
+			);
+
+			return origin;
+		});
+
+		// מיון מקורות
+		const sortOriginsElements = originsElements.sort(
+			(a, b) =>
+				a.elements[0]?.distance?.value -
+				b.elements[0]?.distance?.value
+		);
+
+		return sortOriginsElements;
+	}
+
+	async function googleGetDistance (destinations, origins) {
+		destinations = arrayToPipeString(destinations);
+		origins = arrayToPipeString(origins);
+
+		const response = await axios.get(
+			'https://maps.googleapis.com/maps/api/distancematrix/json',
+			{
+				params: {
+					key: apiKey,
+					destinations,
+					origins
+				}
+			}
+		);
 
 		return response.data;
 	};
