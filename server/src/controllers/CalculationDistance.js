@@ -7,12 +7,17 @@ import { User } from '../Models/userModel.js';
 import { Defibrillator } from '../Models/defibrillatorModel.js';
 import { apiKey } from '../Config/db.js';
 
-// isDestination = true ,(מערך מקורות, יעד)
-// isDestination = false ,(מערך יעדים, מערך מקורות)
+// isDestination = true ,(מערך מקורות, יעד) <- לא עדכני
+// isDestination = false ,(מערך יעדים, מערך מקורות) <- לא עדכני
+
+// רשימת יעדים ומקורות זהה בשתי הקריאות
+// !!סדר הפרמטרים לא משתנה בין הקריאות
+// פעם ראשונה: יעד - חיישן. מקור - דפיברילטורים
+// פעם שנייה: יעד - דפיברילטורים. מקור: מתנדבים
 export async function getDistance (
 	destinations,
-	origins,
-	isDestination = true
+	origins
+	// isDestination = true
 ) {
 	try {
 		if (
@@ -32,45 +37,29 @@ export async function getDistance (
 			destinations = [destinations];
 		}
 
+		// בקשת נתונים מגוגל מפות
 		const data = await googleGetDistance(destinations, origins);
 		// const elements = isDestination ? data.rows[0]?.elements : data.rows;
 
+		// עיבוד נתונים
 		const sortOriginsElements = processingData(data);
 
 		console.log(sortOriginsElements);
 
-		const distances = {};
-		const distances1 = {}; // for exemple
-		sortOriginsElements.forEach((element, index) => {
-			const origin = element.src;
-
-			if (element.elements[0].status === 'OK') {
-				distances[`${origin.lat},${origin.lng}`] = element.elements[0].distance.value;
-
-				distances1[element.src._id] = element.elements[0].distance.value;
-			}
-
-			/* if (element.distance) {
-				const coord = isDestination ? destinations[index] : origins;
-				const distance = element?.distance.value;
-				distances[`${coord.lat},${coord.lng}`] = distance;
-			} else {
-				console.error(
-					`Distance not found for ${isDestination ? 'source' : 'target'
-					} ${index}`
-				);
-			} */
-		});
-		return distances;
+		return sortOriginsElements;
 	} catch (error) {
 		error.message += '\r\n' + 'Failed to get distances from Google Maps API';
 		throw error;
 	}
 
 	function processingData (data) {
+		// רשימת כתובות מקור
 		const origin_addresses = data.origin_addresses;
+
+		// כל השורות של elements
 		const rows = data.rows;
 
+		// הוספת שורות המקור לרשימת מקורות ויעדים
 		const originsElements = rows.map((origin, i) => {
 			origin.src = origins[i];
 			origin.address = origin_addresses[i];
@@ -80,6 +69,7 @@ export async function getDistance (
 				return destination;
 			});
 
+			// מיון יעדים
 			origin.elements = origin.elements.sort(
 				(a, b) =>
 					a?.distance?.value -
@@ -89,6 +79,7 @@ export async function getDistance (
 			return origin;
 		});
 
+		// מיון מקורות
 		const sortOriginsElements = originsElements.sort(
 			(a, b) =>
 				a.elements[0]?.distance?.value -
@@ -115,6 +106,32 @@ export async function getDistance (
 
 		return response.data;
 	};
+}
+
+function graph (originsList) {
+	const distances = {};
+	const distances1 = {}; // for exemple
+	originsList.forEach((element, index) => {
+		const origin = element.src;
+
+		if (element.elements[0].status === 'OK') {
+			distances[`${origin.lat},${origin.lng}`] = element.elements[0].distance.value;
+
+			distances1[element.src._id] = element.elements[0].distance.value;
+		}
+
+		/* if (element.distance) {
+			const coord = isDestination ? destinations[index] : origins;
+			const distance = element?.distance.value;
+			distances[`${coord.lat},${coord.lng}`] = distance;
+		} else {
+			console.error(
+				`Distance not found for ${isDestination ? 'source' : 'target'
+				} ${index}`
+			);
+		} */
+	});
+	return distances;
 }
 
 export async function getActiveVolunteersDistances (
@@ -146,6 +163,12 @@ export async function getActiveVolunteersDistances (
 	const [distancesVolunteers, distancesDefibrillators] = await Promise.all(promiseArray)
 		.catch((error) => console.error(error));
 
+	// זאת פונקצית הגרף? איני יודע
+	const a = graph(distancesVolunteers);
+
+	const b = graph(distancesDefibrillators);
+
+	console.log(a, b);
 	console.log('activeVolunteers:', activeVolunteers);
 	console.log('distancesVolunteers:', distancesVolunteers);
 	console.log('defibrillatorsfree:', defibrillatorsfree);
