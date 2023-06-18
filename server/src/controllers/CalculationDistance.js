@@ -37,8 +37,8 @@ export async function getDistance(
         .map((target) => `${target.lat},${target.lng}`)
         .join("|");
     }
-console.log("origins:",origins);
-console.log("destinations:",destinations);
+    console.log("origins:", origins);
+    console.log("destinations:", destinations);
     const response = await axios.get(
       "https://maps.googleapis.com/maps/api/distancematrix/json",
       {
