@@ -4,6 +4,7 @@ import { setRandomCoordinates, setRandomStatus, sleep } from '../RandomCoordinat
 import { getActiveVolunteersDistances } from '../controllers/CalculationDistance.js';
 
 const Sensor = model('Sensor', new Schema({
+	id: { type: Number, required: true },
 	// sensorID: {type: String, required: true},
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	lifeJacketNum: Number,
@@ -22,7 +23,7 @@ const Sensor = model('Sensor', new Schema({
 }, {
 	versionKey: false,
 	methods: {
-		randomCoordinatesLoop () {
+		randomCoordinatesLoop() {
 			// פונ' סימולציית תזוזה
 			const sec = 0.3;
 
@@ -31,7 +32,7 @@ const Sensor = model('Sensor', new Schema({
 			intervalRandomLoop();
 
 			/* let handle = setInterval( */
-			async function intervalRandomLoop () {
+			async function intervalRandomLoop() {
 				let loopIsRunning = true;
 
 				while (loopIsRunning) {
@@ -74,17 +75,17 @@ const Sensor = model('Sensor', new Schema({
 			}
 		},
 
-		onSos () {
+		onSos() {
 			this.status = 'SOS';
 			this.inflatedLifeJacketNow();
 			getActiveVolunteersDistances(this.position);
 		},
 
-		onAttention () {
+		onAttention() {
 			this.status = 'Attention';
 		},
 
-		inflatedLifeJacketNow () {
+		inflatedLifeJacketNow() {
 			this.inflatedLifeJacket = true;
 		}
 	}
