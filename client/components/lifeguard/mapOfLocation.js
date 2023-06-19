@@ -87,7 +87,7 @@ function MarkerMap({ navigation }) {
             }}
           >
             {
-              (marker.status !== 'OK') ? (
+              (marker.status !== 'OK' && marker.isActive) ? (
                 <InfoWindow
                   position={marker.position}
                 ><div style={styles.infoWindow}><h1 >{

@@ -88,7 +88,7 @@ const Sensor = model(
           this.inflatedLifeJacketNow();
           getActiveVolunteersDistances({
             id: this.id,
-            position:{lat:this.position.lat,lng:this.position.lng}
+            position: { lat: this.position.lat, lng: this.position.lng },
           });
         },
 

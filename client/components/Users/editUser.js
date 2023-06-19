@@ -9,15 +9,18 @@ import {
 } from "react-native";
 
 import { basicUrl } from "../../src/config";
-import { updateItem, getById } from '../../src/Service';
+import { updateItem, getById, getAllItems } from '../../src/Service';
 
 import { Picker } from "@react-native-picker/picker";
 
 const usersURL = basicUrl + 'users';
+const sensorURL = basicUrl + 'sensors';
+
 
 function EditUser({ navigation, route }) {
 
 	const user__id = route.params.user__id;
+
 
 	const roles = ["user", "volunteer", "parent", "lifeguard"];
 
@@ -32,22 +35,69 @@ function EditUser({ navigation, route }) {
 		city: ''
 	});
 
-	useEffect( () => {
 
-			getById(usersURL, user__id)
-			.then((r)=>{
+	const [sensorId, setSensorId] = useState('');
+	const [newSensorId, setNewSensorId] = useState('');
+
+	const [sensors, setSensors] = useState([{}]);
+
+	useEffect(() => {
+		(async () => {
+			const u = await getById(usersURL, user__id).then((r) => {
 				const data = r.data;
 				delete data.volunteer;
 				delete data.sensors;
+				return data;
+			});
 
-				setUser(data);
-			})
+			setUser(u);
+
+			const s = await getAllItems(sensorURL)
+				.then((r) => r.data);
+
+			setSensors(s)
+
+			const sensorObj = s.find((v) => v.userId?._id === user__id);
+
+			if (sensorObj) {
+				setSensorId(sensorObj._id);
+				setNewSensorId(sensorObj._id);
+			}
+		})();
 	}, []);
 
 	const submitHandle = async () => {
 
 		await updateItem(usersURL, user._id, user);
+
+		if (newSensorId !== sensorId) {
+			const newSensorObj = sensors.find((v) => v._id === newSensorId);
+			newSensorObj.isActive = true;
+			newSensorObj.userId = user._id;
+			await updateItem(sensorURL, newSensorId, newSensorObj);
+
+			const oldSensorObj = sensors.find((v) => v._id === sensorId);
+			if (oldSensorObj) {
+				oldSensorObj.isActive = false;
+				oldSensorObj.userId = null;
+				await updateItem(sensorURL, sensorId, oldSensorObj);
+			}
+		}
 		navigation.navigate('AllUsers', { user__id: user._id })
+	};
+
+	const removeSensor = async () => {
+
+		const sensorObj = sensors.find((v) => v._id === sensorId);
+		sensorObj.isActive = false;
+		sensorObj.userId = null;
+
+		await updateItem(sensorURL, sensorId, sensorObj);
+
+		setNewSensorId('');
+
+		navigation.navigate('AllUsers', { user__id: user._id })
+
 	};
 
 	return (
@@ -122,6 +172,24 @@ function EditUser({ navigation, route }) {
 						value={user.city}
 						maxLength={20}
 					/>
+				</View>
+
+				<View style={styles.inputContainer}>
+					<Picker
+						style={styles.input}
+						selectedValue={newSensorId}
+						onValueChange={(text) => {
+							setNewSensorId(text);
+						}}>
+						<Picker.Item label="Select sensor" value={null} key={0} />
+						{sensors.map((item, index) =>
+							<Picker.Item label={item.id} value={item._id} key={index + 1} enabled={!item.isActive} />
+						)}
+					</Picker>
+				</View>
+
+				<View style={styles.buttonContainer}>
+					<Button title="remove sensor" onPress={() => { removeSensor() }} disabled={!sensorId} />
 				</View>
 
 				<View style={styles.buttonContainer}>
