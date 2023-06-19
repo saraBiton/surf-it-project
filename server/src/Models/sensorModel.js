@@ -1,93 +1,108 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-import { setRandomCoordinates, setRandomStatus, sleep } from '../RandomCoordinates.js';
-import { getActiveVolunteersDistances } from '../controllers/CalculationDistance.js';
+import {
+  setRandomCoordinates,
+  setRandomStatus,
+  sleep,
+} from "../RandomCoordinates.js";
+import { getActiveVolunteersDistances } from "../controllers/CalculationDistance.js";
 
-const Sensor = model('Sensor', new Schema({
-	// sensorID: {type: String, required: true},
-	userId: { type: Schema.Types.ObjectId, ref: 'User' },
-	lifeJacketNum: Number,
-	isActive: Boolean,
-	isSimulateMoves: Boolean,
-	position: { lat: Number, lng: Number },
-	status: {
-		type: String,
-		enum: ['OK', 'Attention', 'SOS'],
-		default: 'OK'
-	},
-	inflatedLifeJacket: {
-		type: Boolean,
-		default: false
-	}
-}, {
-	versionKey: false,
-	methods: {
-		randomCoordinatesLoop () {
-			// פונ' סימולציית תזוזה
-			const sec = 0.3;
+const Sensor = model(
+  "Sensor",
+  new Schema(
+    {
+      id: { type: String, required: true },
+      userId: { type: Schema.Types.ObjectId, ref: "User" },
+      lifeJacketNum: Number,
+      isActive: Boolean,
+      isSimulateMoves: Boolean,
+      position: { lat: Number, lng: Number },
+      status: {
+        type: String,
+        enum: ["OK", "Attention", "SOS"],
+        default: "OK",
+      },
+      inflatedLifeJacket: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    {
+      versionKey: false,
+      methods: {
+        randomCoordinatesLoop() {
+          // פונ' סימולציית תזוזה
+          const sec = 0.3;
 
-			const _this = this;
+          const _this = this;
 
-			intervalRandomLoop();
+          intervalRandomLoop();
 
-			/* let handle = setInterval( */
-			async function intervalRandomLoop () {
-				let loopIsRunning = true;
+          /* let handle = setInterval( */
+          async function intervalRandomLoop() {
+            let loopIsRunning = true;
 
-				while (loopIsRunning) {
-					if (
-						_this.$isDeleted() ||
-						!_this.isActive ||
-						!_this.isSimulateMoves
-					) {
-						loopIsRunning = false;
-					} else {
-						_this.position = setRandomCoordinates(_this.position);
-						_this.status = setRandomStatus(_this.status);
+            while (loopIsRunning) {
+              if (
+                _this.$isDeleted() ||
+                !_this.isActive ||
+                !_this.isSimulateMoves
+              ) {
+                loopIsRunning = false;
+              } else {
+                _this.position = setRandomCoordinates(_this.position);
+                _this.status = setRandomStatus(_this.status);
 
-						await _this.save().catch(err => { // התעלמות משגיאה אם החיישן נמחק
-							if (err.name === 'DocumentNotFoundError') {
-								loopIsRunning = false;
-							} else {
-								throw err;
-							}
-						});
+                await _this.save().catch((err) => {
+                  // התעלמות משגיאה אם החיישן נמחק
+                  if (err.name === "DocumentNotFoundError") {
+                    loopIsRunning = false;
+                  } else {
+                    throw err;
+                  }
+                });
 
-						if (_this.status !== 'OK') {
-							switch (_this.status) {
-								case 'Attention':
-									_this.onAttention();
-									break;
-								case 'SOS':
-									_this.onSos();
-									break;
+                if (_this.status !== "OK") {
+                  switch (_this.status) {
+                    case "Attention":
+                      _this.onAttention();
+                      break;
+                    case "SOS":
+                      _this.onSos();
+                      break;
 
-								default:
-									break;
-							}
-							await sleep(5);
-						}
+                    default:
+                      break;
+                  }
+                  await sleep(5);
+                }
 
-						await sleep(sec);
-					}
-				}
-			}
-		},
+                await sleep(sec);
+              }
+            }
+          }
+        },
 
-		onSos () {
-			this.status = 'SOS';
-			this.inflatedLifeJacketNow();
-			getActiveVolunteersDistances(this.position);
-		},
+        onSos() {
+          this.status = "SOS";
+          this.inflatedLifeJacketNow();
+          getActiveVolunteersDistances({
+            id: this.id,
+            position:{lat:this.position.lat,lng:this.position.lng}
+          });
+        },
 
-		onAttention () {
-			this.status = 'Attention';
-		},
+        onAttention() {
+          this.status = "Attention";
+        },
 
-		inflatedLifeJacketNow () {
-			this.inflatedLifeJacket = true;
-		}
-	}
-}), 'sensors');
+        inflatedLifeJacketNow() {
+          this.inflatedLifeJacket = true;
+        },
+      },
+    }
+  ),
+  "sensors"
+);
 
 export { Sensor };

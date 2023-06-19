@@ -9,10 +9,6 @@ import {
   ScrollView,
 } from "react-native";
 
-// import calculateDistance from '../try/trydis';
-
-// const Stack = createStackNavigator();
-
 function HomeScreen({ navigation }) {
   const [activeButton, setActiveButton] = useState(null);
   return (
@@ -77,10 +73,10 @@ function HomeScreen({ navigation }) {
             style={styles.button}
             onPress={() => {
               navigation.navigate("AllDefibrilators");
-            }}>
+            }}
+          >
             <Text style={styles.buttonText}> Defibrilators table </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     </ScrollView>

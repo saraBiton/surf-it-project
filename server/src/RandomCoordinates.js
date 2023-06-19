@@ -29,7 +29,7 @@ function setRandomCoordinates (position) {
 
 function setRandomStatus (status) {
 	if (Math.random() < 0.005) {
-		if (Math.random() < 0.2) {
+		if (Math.random() < 0.8) {
 			return 'SOS';
 		} else {
 			return 'Attention';

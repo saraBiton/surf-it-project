@@ -10,7 +10,6 @@ import { login_router } from './routers/loginRouter.js';
 import { user_router } from './routers/userRouter.js';
 import { defibrilatorRouter } from './routers/defibrilatorRouter.js';
 import sensorController from './controllers/sensorController.js';
-import { getActiveVolunteersDistances } from './controllers/CalculationDistance.js';
 // הפעלת רנדומציית מיקום סנסורים
 sensorController.SetRandomCoordinatesForAll();
 
@@ -20,7 +19,7 @@ app.use('/users', user_router);
 app.use('/sensors', sensor_router);
 app.use('/login', login_router);
 app.use('/defibrilators', defibrilatorRouter);
-getActiveVolunteersDistances();
+
 app.use((err, req, res, next) => {
 	if (res.headersSent) {
 		return next(err);
